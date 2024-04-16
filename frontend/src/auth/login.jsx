@@ -2,6 +2,9 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import MJMarocLogo from "../assets/MJ-Maroc.png";
+import '../styles/login.css';
+
 
 const Login = () => {
 	const navigate = useNavigate();
@@ -62,52 +65,43 @@ const Login = () => {
 	};
 
 	return (
-		<section
-			className="vh-100 ">
-			<div className="mask d-flex align-items-center h-100 gradient-custom-3">
-				<div className="container h-100">
-					<div className="row d-flex justify-content-center align-items-center h-100">
-						<div className="col-12 col-md-9 col-lg-7 col-xl-6">
-							<div className="card" style={{ borderRadius: "15px" }}>
-								<div className="card-body p-5">
-									<h2 className="text-uppercase text-center mb-5">Hello Sir</h2>
-									<form method="POST" onSubmit={handleSubmit}>
-										<div className="form-outline mb-4">
-											<input
-												type="text"
-												name="email"
-												placeholder="Enter Email"
-												className="form-control"
-												onChange={handleChange}
-											/>
-											{validationErrors.email && (
-												<span className="text-danger">
-													{validationErrors.email[0]}
-												</span>
-											)}
-										</div>
-										<div className="form-outline mb-4">
-											<input
-												type="password"
-												name="password"
-												placeholder="Enter Password"
-												className="form-control"
-												onChange={handleChange}
-											/>
-											{validationErrors.password && (
-												<span className="text-danger">
-													{validationErrors.password[0]}
-												</span>
-											)}
-										</div>
-										<button type="submit" className="btn btn-primary mt-4">
-											Submit
-										</button>
-									</form>
-								</div>
-							</div>
-						</div>
+		<section className="vh-100 flex items-center p-8  ">
+			<div className="card w-2/4" style={{ borderRadius: "15px" }}>
+				<div className="card-body p-5">
+					<div className=" w-full flex justify-center pb-8">
+						<img src={MJMarocLogo} alt="" width={80} />
 					</div>
+					<form method="POST" onSubmit={handleSubmit}>
+						<div className="form-outline mb-4">
+							<input
+								type="text"
+								name="email"
+								placeholder="Email"
+								className="form-control"
+								onChange={handleChange}
+							/>
+							{validationErrors.email && (
+								<span className="text-danger">{validationErrors.email[0]}</span>
+							)}
+						</div>
+						<div className="form-outline mb-4">
+							<input
+								type="password"
+								name="password"
+								placeholder="Password"
+								className="form-control"
+								onChange={handleChange}
+							/>
+							{validationErrors.password && (
+								<span className="text-danger">
+									{validationErrors.password[0]}
+								</span>
+							)}
+						</div>
+						<button type="submit" className="btn btn-primary mt-4 w-full">
+							Submit
+						</button>
+					</form>
 				</div>
 			</div>
 		</section>
