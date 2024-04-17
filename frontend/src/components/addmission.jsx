@@ -2,28 +2,12 @@ import { useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import {
 	Button,
-	Cascader,
-	Checkbox,
-	ColorPicker,
 	DatePicker,
 	Form,
 	Input,
-	InputNumber,
-	Radio,
 	Select,
-	Slider,
-	Switch,
-	TreeSelect,
-	Upload,
 } from "antd";
 const { RangePicker } = DatePicker;
-const { TextArea } = Input;
-const normFile = (e) => {
-	if (Array.isArray(e)) {
-		return e;
-	}
-	return e?.fileList;
-};
 
 const AddMission = () => {
     const onChange = (value) => {
@@ -31,38 +15,46 @@ const AddMission = () => {
 		};
 		const onSearch = (value) => {
 			console.log("search:", value);
-		};
+        };
+    const filterOption = (input, option) => {
+        (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
+    }
 	return (
-		<main className=" container pt-5">
-			<Form
-				labelCol={{
-					span: 4,
-				}}
-				wrapperCol={{
-					span: 14,
-				}}
-				layout="horizontal"
-				style={{
-					maxWidth: 600,
-				}}>
-				<Form.Item label="نوغ المهمة">
+		<main className=" container pt-5 text-right">
+			<h1 className=" text-4xl text-red-500 mb-5"> : إضافة مهمة</h1>
+			<form className="mission-form">
+				<div>
 					<Input />
-				</Form.Item>
-				<Form.Item label="Select">
+					<label htmlFor="">: نوع المهمة</label>
+				</div>
+
+				<div>
 					<Select>
-						<Select.Option value="demo">Demo</Select.Option>
+						<Select.Option value="demo"> محكمة الاستئناف الرباط</Select.Option>
 					</Select>
-				</Form.Item>
-				<Form.Item label="RangePicker">
-					<RangePicker />
-				</Form.Item>
-				<Form.Item label="الموظف">
+					<label htmlFor="">: محكمة الاستئناف</label>
+				</div>
+
+				<div>
+					<Select>
+						<Select.Option value="demo">محكمة الاستئناف الرباط</Select.Option>
+					</Select>
+					<label htmlFor=""> : المحكمة اﻹبتدائية</label>
+				</div>
+
+				<div>
+					<RangePicker name="date-range" />
+					<label htmlFor=""> : تاريخ المهمة</label>
+				</div>
+
+				<div>
 					<Select
 						showSearch
 						placeholder="Select a person"
 						optionFilterProp="children"
 						onChange={onChange}
 						onSearch={onSearch}
+						filterOption={filterOption}
 						options={[
 							{
 								value: "jack",
@@ -78,44 +70,13 @@ const AddMission = () => {
 							},
 						]}
 					/>
-				</Form.Item>
-				<Form.Item label="TextArea">
-					<TextArea rows={4} />
-				</Form.Item>
-				<Form.Item label="Switch" valuePropName="checked">
-					<Switch />
-				</Form.Item>
-				<Form.Item
-					label="Upload"
-					valuePropName="fileList"
-					getValueFromEvent={normFile}>
-					<Upload action="/upload.do" listType="picture-card">
-						<button
-							style={{
-								border: 0,
-								background: "none",
-							}}
-							type="button">
-							<PlusOutlined />
-							<div
-								style={{
-									marginTop: 8,
-								}}>
-								Upload
-							</div>
-						</button>
-					</Upload>
-				</Form.Item>
-				<Form.Item label="Button">
-					<Button>Button</Button>
-				</Form.Item>
-				<Form.Item label="Slider">
-					<Slider />
-				</Form.Item>
-				<Form.Item label="ColorPicker">
-					<ColorPicker />
-				</Form.Item>
-			</Form>
+					<label htmlFor="">: الموظف</label>
+				</div>
+
+				<Button type="primary" htmlType="submit" className=" w-full">
+					إضافة المهمة
+				</Button>
+			</form>
 		</main>
 	);
 };
