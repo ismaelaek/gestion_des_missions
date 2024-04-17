@@ -4,6 +4,8 @@ import Login from "./auth/login";
 import Navbar from "./components/navbar";
 import "./App.css";
 
+// resolve conflicts 
+
 function App() {
 	const NavBarContainer = () => {
 		const location = useLocation();
