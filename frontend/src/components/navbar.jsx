@@ -11,7 +11,7 @@ import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import MJLogo from '../assets/MJ-Maroc.png'
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 const pages = [
 	{ title: "لائحة الموظفين", path: "proffesionnels" },
@@ -72,7 +72,11 @@ function Navbar() {
 							))}
 						</Menu>
 					</Box>
-					<Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none", justifyContent : 'right' } }}>
+					<Box
+						sx={{
+							flexGrow: 1,
+							display: { xs: "flex", md: "none", justifyContent: "right" },
+						}}>
 						<IconButton
 							size="large"
 							aria-label="account of current user"
@@ -113,7 +117,12 @@ function Navbar() {
 							</div>
 						</Menu>
 					</Box>
-					<Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" , justifyContent: 'right'}, mr: 4 }}>
+					<Box
+						sx={{
+							flexGrow: 1,
+							display: { xs: "none", md: "flex", justifyContent: "right" },
+							mr: 4,
+						}}>
 						{pages.map((page, index) => (
 							<NavLink
 								key={index}
@@ -124,7 +133,9 @@ function Navbar() {
 							</NavLink>
 						))}
 					</Box>
-					<img src={MJLogo} alt="Ministre of Justice logo" width={40} />
+					<Link to='/'>
+						<img src={MJLogo} alt="Ministre of Justice logo" width={40} />
+					</Link>
 				</Toolbar>
 			</Container>
 		</AppBar>

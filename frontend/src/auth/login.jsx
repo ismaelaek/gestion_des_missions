@@ -36,8 +36,8 @@ const Login = () => {
 
 			Swal.fire({
 				icon: "success",
-				title: "Login Successful",
-				text: "Welcome back!",
+				title: "Success",
+				text: "Login Successful",
 			}).then(() => {
 				navigate("/dashboard");
 			});
@@ -71,7 +71,7 @@ const Login = () => {
 					<div className=" w-full flex justify-center pb-8">
 						<img src={MJMarocLogo} alt="" width={80} />
 					</div>
-					<form method="POST" onSubmit={handleSubmit}>
+					<form method="POST" >
 						<div className="form-outline mb-4">
 							<input
 								type="text"

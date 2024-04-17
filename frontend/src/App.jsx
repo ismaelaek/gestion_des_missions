@@ -2,6 +2,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import Home from "./components/home";
 import Login from "./auth/login";
 import Navbar from "./components/navbar";
+import AddMission from "./components/addmission";
 import "./App.css";
 
 // resolve conflicts 
@@ -13,14 +14,16 @@ function App() {
 			return <Navbar />;
 	};
 
-	return (<>
-		<NavBarContainer />
-		<Routes>
-			<Route path="/" element={<Home />} />
-			<Route path="/login" element={<Login />} />
-			<Route path="*" element={<h1>Page Not Found</h1>} />
-		</Routes>
-	</>
+	return (
+		<>
+			<NavBarContainer />
+			<Routes>
+				<Route path="/" element={<Home />} />
+				<Route path="/login" element={<Login />} />
+				<Route path="/newmission" element={<AddMission />} />
+				<Route path="*" element={<h1>Page Not Found</h1>} />
+			</Routes>
+		</>
 	);
 }
 

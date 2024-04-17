@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -21,6 +22,16 @@ return new class extends Migration
             $table->timestamps();
             $table->unique(['email']);
         });
+
+        DB::table('utilisateurs')->insert([
+            'nom' => 'John',
+            'prenom' => 'Doe',
+            'email' => 'john@example.com',
+            'password' => bcrypt('password'),
+            'remember_token' => null,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 
     /**
