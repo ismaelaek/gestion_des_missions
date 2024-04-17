@@ -1,0 +1,13 @@
+.active {
+    text-decoration: none;
+    position: relative;
+}
+.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 100%;
+    border-bottom: 2px solid white;
+}
+

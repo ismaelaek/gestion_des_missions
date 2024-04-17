@@ -8,14 +8,17 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import MJLogo from '../assets/MJ-Maroc.png'
+import { NavLink } from 'react-router-dom';
 
-const pages = ["Ajouter Mission", "Ajouter Proffesionnel", "Liste Proffesionnels"];
-const settings = ["Logout"];
+const pages = [
+	{ title: "لائحة الموظفين", path: "proffesionnels" },
+	{ title: "اضافة موظف", path: "newproffesionnel" },
+	{ title: "اضافة مهمة", path: "newmission" },
+];
+const settings = ["تسجيل الخروج"];
 
 function Navbar() {
 	const [anchorElNav, setAnchorElNav] = useState(null);
@@ -40,9 +43,36 @@ function Navbar() {
 		<AppBar position="static">
 			<Container maxWidth="xl">
 				<Toolbar disableGutters>
-					<img src={MJLogo} alt="Ministre of Justice logo" width={40}  />
+					<Box sx={{ flexGrow: 0 }}>
+						<Tooltip>
+							<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+								<Avatar alt="Remy Sharp" src="" />
+							</IconButton>
+						</Tooltip>
 
-					<Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+						<Menu
+							sx={{ mt: "45px", justifyContent: "right" }}
+							id="menu-appbar"
+							anchorEl={anchorElUser}
+							anchorOrigin={{
+								vertical: "top",
+								horizontal: "left",
+							}}
+							keepMounted
+							transformOrigin={{
+								vertical: "top",
+								horizontal: "left",
+							}}
+							open={Boolean(anchorElUser)}
+							onClose={handleCloseUserMenu}>
+							{settings.map((setting) => (
+								<MenuItem key={setting} onClick={handleCloseUserMenu}>
+									<Typography textAlign="right">{setting}</Typography>
+								</MenuItem>
+							))}
+						</Menu>
+					</Box>
+					<Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none", justifyContent : 'right' } }}>
 						<IconButton
 							size="large"
 							aria-label="account of current user"
@@ -52,87 +82,49 @@ function Navbar() {
 							color="inherit">
 							<MenuIcon />
 						</IconButton>
+						{/* mobile menu */}
 						<Menu
 							id="menu-appbar"
 							anchorEl={anchorElNav}
 							anchorOrigin={{
 								vertical: "bottom",
-								horizontal: "left",
+								horizontal: "right",
 							}}
 							keepMounted
 							transformOrigin={{
 								vertical: "top",
-								horizontal: "left",
+								horizontal: "right",
 							}}
 							open={Boolean(anchorElNav)}
 							onClose={handleCloseNavMenu}
 							sx={{
 								display: { xs: "block", md: "none" },
 							}}>
-							{pages.map((page) => (
-								<MenuItem key={page} onClick={handleCloseNavMenu}>
-									<Typography textAlign="center">{page}</Typography>
-								</MenuItem>
-							))}
+							<div className=" flex flex-col px-4">
+								{pages.map((page, index) => (
+									<NavLink
+										key={index}
+										to={page.path}
+										className=" no-underline my-1"
+										onClick={handleCloseNavMenu}>
+										{page.title}
+									</NavLink>
+								))}
+							</div>
 						</Menu>
 					</Box>
-					<AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-					<Typography
-						variant="h5"
-						noWrap
-						component="a"
-						href="#app-bar-with-responsive-menu"
-						sx={{
-							mr: 2,
-							display: { xs: "flex", md: "none" },
-							flexGrow: 1,
-							fontFamily: "monospace",
-							fontWeight: 700,
-							letterSpacing: ".3rem",
-							color: "inherit",
-							textDecoration: "none",
-						}}>
-						LOGO
-					</Typography>
-					<Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-						{pages.map((page) => (
-							<Button
-								key={page}
+					<Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" , justifyContent: 'right'}, mr: 4 }}>
+						{pages.map((page, index) => (
+							<NavLink
+								key={index}
 								onClick={handleCloseNavMenu}
-								sx={{ my: 2, color: "white", display: "block" }}>
-								{page}
-							</Button>
+								to={page.path}
+								className="nav-item text-white no-underline ml-3">
+								{page.title}
+							</NavLink>
 						))}
 					</Box>
-
-					<Box sx={{ flexGrow: 0 }}>
-						<Tooltip title="Open settings">
-							<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-								<Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-							</IconButton>
-						</Tooltip>
-						<Menu
-							sx={{ mt: "45px" }}
-							id="menu-appbar"
-							anchorEl={anchorElUser}
-							anchorOrigin={{
-								vertical: "top",
-								horizontal: "right",
-							}}
-							keepMounted
-							transformOrigin={{
-								vertical: "top",
-								horizontal: "right",
-							}}
-							open={Boolean(anchorElUser)}
-							onClose={handleCloseUserMenu}>
-							{settings.map((setting) => (
-								<MenuItem key={setting} onClick={handleCloseUserMenu}>
-									<Typography textAlign="center">{setting}</Typography>
-								</MenuItem>
-							))}
-						</Menu>
-					</Box>
+					<img src={MJLogo} alt="Ministre of Justice logo" width={40} />
 				</Toolbar>
 			</Container>
 		</AppBar>
