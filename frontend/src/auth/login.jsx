@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { message } from 'antd';
 import MJMarocLogo from "../assets/MJ-Maroc.png";
 import '../styles/login.css';
 
@@ -26,28 +27,37 @@ const Login = () => {
 
 		try {
 			const response = await axios.post(
-				"http://127.0.0.1:8000/api/login",
+				"http://127.0.0.1:8000/api/auth/login",
 				formData
 			);
+			console.log(response.data);
 
-			const token = response.data.authorisation.token;
+			const token = response.data.token;
 
 			localStorage.setItem("token", token);
 
-			Swal.fire({
-				icon: "success",
-				title: "Success",
-				text: "Login Successful",
-			}).then(() => {
-				navigate("/dashboard");
-			});
+			// Swal.fire({
+			// 	icon: "success",
+			// 	title: "Success",
+			// 	text: "Login Successful",
+			// }).then(() => {
+			// 	navigate("/");
+			// });
+
+			message.success("Login Successful");
+
+			navigate("/");
+
 		} catch (error) {
 			if (error.response && error.response.status === 401) {
-				Swal.fire({
-					icon: "error",
-					title: "Login Failed",
-					text: "Invalid email or password. Please try again.",
-				});
+				// Swal.fire({
+				// 	icon: "error",
+				// 	title: "Login Failed",
+				// 	text: "Invalid email or password. Please try again.",
+				// });
+				message.error(
+					"Invalid email or password. Please try again."
+				);
 			} else {
 				const responseData = error.response.data;
 				setValidationErrors(responseData);
@@ -71,7 +81,7 @@ const Login = () => {
 					<div className=" w-full flex justify-center pb-8">
 						<img src={MJMarocLogo} alt="" width={80} />
 					</div>
-					<form method="POST" >
+					<form method="POST" onSubmit={handleSubmit} >
 						<div className="form-outline mb-4">
 							<input
 								type="text"
