@@ -36,9 +36,9 @@ class AuthController extends Controller
         }
 
         return response()->json([
-            'token' => $token
+            'token' => $token,
+            'user' => auth()->user()
         ]);
-        //return $this->respondWithToken($token);
     }
 
     /**

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -9,6 +9,12 @@ import '../styles/login.css';
 
 const Login = () => {
 	const navigate = useNavigate();
+	useEffect(() => {
+		const token = localStorage.getItem("token");
+		if (token) {
+			navigate("/");
+		}
+	}, [navigate]);
 	const [formData, setFormData] = useState({
 		email: "",
 		password: "",
@@ -32,17 +38,8 @@ const Login = () => {
 			);
 			console.log(response.data);
 
-			const token = response.data.token;
-
-			localStorage.setItem("token", token);
-
-			// Swal.fire({
-			// 	icon: "success",
-			// 	title: "Success",
-			// 	text: "Login Successful",
-			// }).then(() => {
-			// 	navigate("/");
-			// });
+			localStorage.setItem("token", response.data.token);
+			localStorage.setItem("user", JSON.stringify(response.data.user));
 
 			message.success("Login Successful");
 
@@ -50,11 +47,6 @@ const Login = () => {
 
 		} catch (error) {
 			if (error.response && error.response.status === 401) {
-				// Swal.fire({
-				// 	icon: "error",
-				// 	title: "Login Failed",
-				// 	text: "Invalid email or password. Please try again.",
-				// });
 				message.error(
 					"Invalid email or password. Please try again."
 				);
@@ -81,12 +73,12 @@ const Login = () => {
 					<div className=" w-full flex justify-center pb-8">
 						<img src={MJMarocLogo} alt="" width={80} />
 					</div>
-					<form method="POST" onSubmit={handleSubmit} >
+					<form method="POST" onSubmit={handleSubmit}  >
 						<div className="form-outline mb-4">
 							<input
 								type="text"
 								name="email"
-								placeholder="Email"
+								placeholder="البريد الالكتروني"
 								className="form-control"
 								onChange={handleChange}
 							/>
@@ -98,7 +90,7 @@ const Login = () => {
 							<input
 								type="password"
 								name="password"
-								placeholder="Password"
+								placeholder="كلمة السر"
 								className="form-control"
 								onChange={handleChange}
 							/>
@@ -109,7 +101,7 @@ const Login = () => {
 							)}
 						</div>
 						<button type="submit" className="btn btn-primary mt-4 w-full">
-							Submit
+							دخول
 						</button>
 					</form>
 				</div>

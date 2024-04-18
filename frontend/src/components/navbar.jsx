@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -12,15 +12,32 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import MJLogo from '../assets/MJ-Maroc.png'
 import { Link, NavLink } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const pages = [
 	{ title: "لائحة الموظفين", path: "proffesionnels" },
+	{ title: "لائحة المهمات", path: "missions" },
 	{ title: "اضافة موظف", path: "newproffesionnel" },
 	{ title: "اضافة مهمة", path: "newmission" },
 ];
-const settings = ["تسجيل الخروج"];
 
 function Navbar() {
+	const navigate = useNavigate();	
+	const [loggedUser, setLoggedUser] = useState({});
+
+	useEffect(() => {
+		const token = localStorage.getItem("token");
+		if (!token) {
+			navigate("/login");
+		}
+		else {
+			const user = JSON.parse(localStorage.getItem("user"));
+            setLoggedUser(user);
+		}
+	}, [navigate]);
+
+
+
 	const [anchorElNav, setAnchorElNav] = useState(null);
 	const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -38,6 +55,11 @@ function Navbar() {
 	const handleCloseUserMenu = () => {
 		setAnchorElUser(null);
 	};
+	const handleLogout = () => {
+		localStorage.removeItem("token");
+		localStorage.removeItem("user");
+		window.location.reload();
+	}
 
 	return (
 		<AppBar position="static">
@@ -45,9 +67,12 @@ function Navbar() {
 				<Toolbar disableGutters>
 					<Box sx={{ flexGrow: 0 }}>
 						<Tooltip>
-							<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-								<Avatar alt="Remy Sharp" src="" />
-							</IconButton>
+								<Typography
+									onClick={handleOpenUserMenu}
+									variant="subtitle1"
+									sx={{ ml: 1,  color: "white", cursor : 'pointer'}}>
+									{`${loggedUser.nom} ${loggedUser.prenom}`}
+								</Typography>
 						</Tooltip>
 
 						<Menu
@@ -65,11 +90,11 @@ function Navbar() {
 							}}
 							open={Boolean(anchorElUser)}
 							onClose={handleCloseUserMenu}>
-							{settings.map((setting) => (
-								<MenuItem key={setting} onClick={handleCloseUserMenu}>
-									<Typography textAlign="right">{setting}</Typography>
-								</MenuItem>
-							))}
+							<MenuItem onClick={handleCloseUserMenu}>
+								<Typography textAlign="right" onClick={handleLogout}>
+									LogOut
+								</Typography>
+							</MenuItem>
 						</Menu>
 					</Box>
 					<Box
@@ -133,7 +158,7 @@ function Navbar() {
 							</NavLink>
 						))}
 					</Box>
-					<Link to='/'>
+					<Link to="/">
 						<img src={MJLogo} alt="Ministre of Justice logo" width={40} />
 					</Link>
 				</Toolbar>
