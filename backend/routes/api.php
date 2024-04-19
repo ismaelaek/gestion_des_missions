@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\CadreController;
+use App\Http\Controllers\DirectionController;
 use App\Http\Controllers\JuridictionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +27,6 @@ Route::post('/auth/login', [AuthController::class, 'login']);
 
 Route::prefix('data')->group(function () {
     Route::get('/juridictions/{idTypeJurid}', [JuridictionController::class, 'index']);
-
-
+    Route::get('/directions', [DirectionController::class, 'index']);
+    Route::get('/caders', [CadreController::class, 'index']);
 });

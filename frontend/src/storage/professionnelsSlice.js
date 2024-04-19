@@ -8,7 +8,7 @@ const initialState = {
 };
 
 const getProfs = createAsyncThunk("getProfs", () => {
-    return axios.get('http://localhost:8000/api/proffesionnels');
+    return axios.get('http://localhost:8000/api/professionnels');
 
 })
 

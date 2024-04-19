@@ -13,7 +13,8 @@ class CadreController extends Controller
      */
     public function index()
     {
-        //
+        $cadres = Cadre::get();
+        return response()->json($cadres);
     }
 
     /**

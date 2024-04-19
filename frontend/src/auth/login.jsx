@@ -36,7 +36,6 @@ const Login = () => {
 				"http://127.0.0.1:8000/api/auth/login",
 				formData
 			);
-			console.log(response.data);
 
 			localStorage.setItem("token", response.data.token);
 			localStorage.setItem("user", JSON.stringify(response.data.user));

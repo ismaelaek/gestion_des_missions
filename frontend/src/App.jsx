@@ -1,4 +1,6 @@
 import { Routes, Route, useLocation } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./storage/store";
 import Home from "./components/home";
 import Login from "./auth/login";
 import Navbar from "./components/navbar";
@@ -17,7 +19,7 @@ function App() {
 	};
 
 	return (
-		<>	
+		<Provider store={store}>
 			<NavBarContainer />
 			<Routes>
 				<Route path="/" element={<Home />} />
@@ -26,7 +28,7 @@ function App() {
 				<Route path="/newproffesionnel" element={<AddProfessionnel />} />
 				<Route path="*" element={<h1>Page Not Found</h1>} />
 			</Routes>
-		</>
+		</Provider>
 	);
 }
 

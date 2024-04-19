@@ -11,7 +11,8 @@ class DirectionController extends Controller
      */
     public function index()
     {
-        //
+        $directions = Direction::get();
+        return response()->json($directions);
     }
 
     /**
