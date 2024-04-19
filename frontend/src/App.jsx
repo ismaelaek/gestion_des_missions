@@ -6,6 +6,8 @@ import Login from "./auth/login";
 import Navbar from "./components/navbar";
 import AddMission from "./components/addmission";
 import AddProfessionnel from "./components/addprofessionel";
+import ProfessionnelsList from "./components/professionnelsList";
+import MissionsList from "./components/missionsList";
 
 import "./App.css";
 
@@ -26,6 +28,8 @@ function App() {
 				<Route path="/login" element={<Login />} />
 				<Route path="/newmission" element={<AddMission />} />
 				<Route path="/newproffesionnel" element={<AddProfessionnel />} />
+				<Route path="/professionnels" element={<ProfessionnelsList />} />
+				<Route path="/missions" element={<MissionsList />} />
 				<Route path="*" element={<h1>Page Not Found</h1>} />
 			</Routes>
 		</Provider>

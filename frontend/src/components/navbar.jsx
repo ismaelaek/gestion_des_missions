@@ -15,7 +15,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 
 const pages = [
-	{ title: "لائحة الموظفين", path: "proffesionnels" },
+	{ title: "لائحة الموظفين", path: "professionnels" },
 	{ title: "لائحة المهمات", path: "missions" },
 	{ title: "اضافة موظف", path: "newproffesionnel" },
 	{ title: "اضافة مهمة", path: "newmission" },

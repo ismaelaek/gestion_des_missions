@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreProfessionnelRequest;
-use App\Http\Requests\UpdateProfessionnelRequest;
+use Illuminate\Http\Request;
 use App\Models\Professionnel;
+use Illuminate\Support\Facades\Validator;
 
 class ProfessionnelController extends Controller
 {
@@ -13,23 +13,38 @@ class ProfessionnelController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $professionnels = Professionnel::get();
+        return response()->json($professionnels);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProfessionnelRequest $request)
+    public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'NumeroSomme' => 'required|string|max:255',
+            'Email' => 'required|email|unique:professionnels',
+            'IdCadre' => 'required|exists:cadres,id',
+            'IdDirection' => 'required|exists:directions,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $professionnel = new Professionnel();
+        $professionnel->nom = $request->nom;
+        $professionnel->prenom = $request->prenom;
+        $professionnel->NumeroSomme = $request->NumeroSomme;
+        $professionnel->Email = $request->Email;
+        $professionnel->IdCadre = $request->IdCadre;
+        $professionnel->IdDirection = $request->IdDirection;
+        $professionnel->save();
+
+        return response()->json(['message' => '! تمت إضافة الموظف بمجاح'], 201);
     }
 
     /**
@@ -40,18 +55,11 @@ class ProfessionnelController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Professionnel $professionnel)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProfessionnelRequest $request, Professionnel $professionnel)
+    public function update(Request $request, Professionnel $professionnel)
     {
         //
     }

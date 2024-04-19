@@ -38,7 +38,7 @@ const getCaders = getAsyncData(
 );
 
 
-const directionsSlice = createSlice({
+const dataSlice = createSlice({
 	name: "directions",
 	initialState,
 	reducers: {},
@@ -73,4 +73,4 @@ const directionsSlice = createSlice({
 });
 
 export { getDirections, getCaders };
-export default directionsSlice.reducer;
+export default dataSlice.reducer;

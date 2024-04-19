@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import directionsSlice from "./dataSlice";
+import dataSlice from "./dataSlice";
+import professionnelsSlice from "./professionnelsSlice";
 
 
 const store = configureStore({
 	reducer: {
-		directions: directionsSlice,
+		data: dataSlice,
+		professionnels: professionnelsSlice,
 	},
 });
 export default store;
