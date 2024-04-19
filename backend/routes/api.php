@@ -25,7 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/auth/login', [AuthController::class, 'login']);
 
-Route::prefix('data')->group(function () {
+Route::prefix('data')->middleware('auth:api')->group(function () {
     Route::get('/juridictions/{idTypeJurid}', [JuridictionController::class, 'index']);
     Route::get('/directions', [DirectionController::class, 'index']);
     Route::get('/caders', [CadreController::class, 'index']);

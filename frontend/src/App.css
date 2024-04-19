@@ -16,13 +16,23 @@
     border-bottom: 2px solid white;
 }
 
+.mission-form{
+    margin-right: 20px;
+}
 .mission-form  > div{
     width: 100%;
     display: grid;
-    grid-template-columns: 70% 30%;
-    justify-content: start;
+    grid-template-columns: 40% 30%;
+    justify-content: end;
     padding: 5px 0;
 }
 .mission-form input{
     text-align: right;
+}
+.mission-form > div > label{
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+.submit-btn{
+    grid-column: 1/3;
 }
