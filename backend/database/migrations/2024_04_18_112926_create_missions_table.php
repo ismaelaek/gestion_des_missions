@@ -15,8 +15,15 @@ class CreateMissionsTable extends Migration
             $table->date('DateAller');
             $table->date('DateRetour');
             $table->date('DateEdition');
+            $table->unsignedBigInteger('idEtatMission');
+            $table->foreign('idEtatMission')->references('id')->on('etat_missions');
+            $table->unsignedBigInteger('idProfessionnel');
+            $table->foreign('idProfessionnel')->references('id')->on('professionnels');
+            $table->unsignedBigInteger('idJuridiction');
+            $table->foreign('idJuridiction')->references('id')->on('juridictions');
             $table->timestamps();
         });
+
     }
 
     public function down()

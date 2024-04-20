@@ -26,14 +26,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/auth/login', [AuthController::class, 'login']);
 
-Route::prefix('data')->middleware('auth:api')->group(function () {
-    Route::get('/juridictions/{idTypeJurid}', [JuridictionController::class, 'index']);
+Route::prefix('/data')->middleware('auth:api')->group(function () {
+    Route::get('/juridictions/{idTypeJurid}/{IdJuridictionParent?}', [JuridictionController::class, 'index']);
     Route::get('/directions', [DirectionController::class, 'index']);
     Route::get('/caders', [CadreController::class, 'index']);
     Route::get('/professionnels', [ProfessionnelController::class, 'index']);
 });
 
-Route::prefix('professionnels')->group(function () {
+Route::prefix('/professionnels')->group(function () {
     Route::post('/store', [ProfessionnelController::class, 'store']);
     Route::delete('/{professionnel}', [ProfessionnelController::class, 'destroy']);
 

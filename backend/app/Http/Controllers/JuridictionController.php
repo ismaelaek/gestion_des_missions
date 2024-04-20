@@ -7,11 +7,17 @@ use App\Models\Juridiction;
 class JuridictionController extends Controller
 {
 
-    public function index($idTypeJurid)
+    public function index($idTypeJurid, $IdJuridictionParent = null)
     {
-        $premiereTribunals = Juridiction::where('idTypeJurid', $idTypeJurid)->get();
+        $query = Juridiction::where('idTypeJurid', $idTypeJurid);
 
-        return response()->json($premiereTribunals);
+        if ($IdJuridictionParent !== null) {
+            $query->where('IdJuridictionParent', $IdJuridictionParent);
+        }
+
+        $juridictions = $query->get();
+
+        return response()->json($juridictions);
     }
 
     /**
