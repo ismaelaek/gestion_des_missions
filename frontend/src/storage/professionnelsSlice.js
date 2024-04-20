@@ -7,10 +7,13 @@ const initialState = {
 	profError: null,
 };
 
-const token = localStorage.getItem("token");
+const getToken = () => {
+	return localStorage.getItem("token");
+};
 
 const getProfessionnels = createAsyncThunk("getProfs", async () => {
 	try {
+		const token = getToken();
 		const response = await axios.get(
 			"http://127.0.0.1:8000/api/data/professionnels",
 			{
@@ -29,6 +32,7 @@ const addProfessionnel = createAsyncThunk(
 	"addProfessionnel",
 	async (formData) => {
 		try {
+			const token = getToken();
 			const response = await axios.post(
 				"http://127.0.0.1:8000/api/professionnels/store",
 				formData,
@@ -48,12 +52,13 @@ const deleteProfessionnel = createAsyncThunk(
 	"deleteProfessionnel",
 	async (id) => {
 		try {
+			const token = getToken();
 			await axios.delete(`http://127.0.0.1:8000/api/professionnels/${id}`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
 			});
-			return id; 
+			return id;
 		} catch (error) {
 			throw error;
 		}
@@ -111,5 +116,5 @@ const professionnelsSlice = createSlice({
 	},
 });
 
-export { getProfessionnels, addProfessionnel, deleteProfessionnel};
+export { getProfessionnels, addProfessionnel, deleteProfessionnel };
 export default professionnelsSlice.reducer;

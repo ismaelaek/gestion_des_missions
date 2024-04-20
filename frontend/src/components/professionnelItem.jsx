@@ -11,7 +11,6 @@ const ProfessionnelItem = ({ object, directions, caders }) => {
 	const cader = caders.find((cader) => cader.id === object.IdCadre);
 	const handleDelete = () => {
 		dispatch(deleteProfessionnel(object.id));
-		console.log('clicked');
 	};
 	return (
 		<tr>

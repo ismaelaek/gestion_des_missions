@@ -1,11 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, DatePicker, Form, Input, Select } from "antd";
+import { getJuridAppels, getJuridPremieres } from "../storage/jusridictionsSlice";
+import { getProfessionnels } from "../storage/professionnelsSlice";
 
 const { RangePicker } = DatePicker;
 
 const AddMission = () => {
+	const dispatch = useDispatch();
+	const { juriAppels, juriPremieres, jurIsLoading } = useSelector(
+		(state) => state.jusridictions
+	);
+	const { professionnels, profIsLoading } = useSelector(
+        (state) => state.professionnels
+    );
 	const [loading, setLoading] = useState(false);
-
+	useEffect(() => {
+		dispatch(getJuridAppels());
+		dispatch(getProfessionnels());
+	},[dispatch])
 	const onFinish = async (values) => {
 		setLoading(true);
 
@@ -19,6 +32,10 @@ const AddMission = () => {
 			message.error("حدث خطأ أثناء إضافة المهمة.");
 		}
 	};
+	const handleAppelChange = (value) => {
+		console.log(" clicked ",value);
+		dispatch(getJuridPremieres(value));
+	}
 
 	return (
 		<main className="container pt-5 text-right">
@@ -43,8 +60,14 @@ const AddMission = () => {
 						rules={[
 							{ required: true, message: "! الرجاء اختيار محكمة الاستئناف" },
 						]}>
-						<Select style={{ textAlign: "right" }}>
-							<Select.Option value="demo">محكمة الاستئناف الرباط</Select.Option>
+						<Select style={{ textAlign: "right" }} onChange={handleAppelChange}>
+							{juriAppels.map((juriAppel) => {
+								return (
+									<Select.Option key={juriAppel.id} value={juriAppel.id}>
+										{juriAppel.JurLibelle_ar}
+									</Select.Option>
+								);
+							})}
 						</Select>
 					</Form.Item>
 					<label htmlFor="appealCourt">: محكمة الاستئناف</label>
@@ -58,9 +81,19 @@ const AddMission = () => {
 						rules={[
 							{ required: true, message: "! الرجاء اختيار المحكمة الإبتدائية" },
 						]}>
-						<Select style={{ textAlign: "right" }}>
-							<Select.Option value="demo">محكمة الاستئناف الرباط</Select.Option>
-						</Select>
+						{juriPremieres.length > 0 ? (
+							<Select style={{ textAlign: "right" }}>
+								{juriPremieres.map((juriPremiere) => {
+									return (
+										<Select.Option
+											key={juriPremiere.id}
+											value={juriPremiere.id}>
+											{juriPremiere.JurLibelle_ar}
+										</Select.Option>
+									);
+								})}
+							</Select>
+						) : null }
 					</Form.Item>
 					<label htmlFor="primaryCourt">: المحكمة اﻹبتدائية</label>
 				</div>
@@ -85,9 +118,13 @@ const AddMission = () => {
 						style={{ textAlign: "end", marginBottom: 0 }}
 						rules={[{ required: true, message: "! الرجاء اختيار الموظف" }]}>
 						<Select style={{ textAlign: "right" }}>
-							<Select.Option value="jack">Jack</Select.Option>
-							<Select.Option value="lucy">Lucy</Select.Option>
-							<Select.Option value="tom">Tom</Select.Option>
+							{professionnels.map((professionnel) => {
+                                return (
+                                    <Select.Option key={professionnel.id} value={professionnel.id}>
+                                        {professionnel.nom} {professionnel.prenom}
+                                    </Select.Option>
+                                );
+                            })}
 						</Select>
 					</Form.Item>
 					<label htmlFor="employee">: الموظف</label>
