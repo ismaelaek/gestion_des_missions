@@ -1,19 +1,24 @@
 import { useEffect} from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { getProfessionnels } from "../storage/professionnelsSlice";
+import { getCaders, getDirections } from "../storage/dataSlice";
 import { SlDrawer } from "react-icons/sl";
 import { Link } from 'react-router-dom'
 import ProfessionnelItem from "./professionnelItem";
+import Loader from "./loader";
 
 
 const ProfessionnelsList = () => {
     const dispatch = useDispatch();
-    const { professionnels } = useSelector(
+    const { professionnels, profIsLoading } = useSelector(
         state => state.professionnels
-    )
+	)
+	const { caders, directions } = useSelector((state) => state.data);
 
     useEffect(() => {
-        dispatch(getProfessionnels());
+		dispatch(getProfessionnels());
+		dispatch(getCaders());
+		dispatch(getDirections());
     }, [dispatch]);
 
     const Empty = () => {
@@ -32,12 +37,17 @@ const ProfessionnelsList = () => {
         return (
             <table className=" w-full text-right">
             {professionnels.map((profession) => {
-					return <ProfessionnelItem object={profession} />;
+					return <ProfessionnelItem object={profession} caders={caders} directions={directions} />;
 				})}
             </table>
         )
         
-     }
+	}
+	if (profIsLoading) {
+		return <main className=" container flex h-96 justify-center items-center">
+			<Loader />
+		</main>
+	}
     return (
 			<main className=" container  pt-3 text-right">
 				{professionnels.length === 0 ? (
@@ -48,7 +58,7 @@ const ProfessionnelsList = () => {
                             <Link to={"/newproffesionnel"}>إضافة موظف</Link>
 							<h1 className="text-4xl text-red-500 mb-3">قائمة الموظفين</h1>
 						</div>
-						{/* <ProfList /> */}
+						<ProfList />
 					</>
 				)}
 			</main>

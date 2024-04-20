@@ -32,6 +32,15 @@ const AddProfessionnel = () => {
 
 	const onFinish = () => {
 		dispatch(addProfessionnel(formData));
+		if (profIsLoading) {
+			message.loading('جاري التحميل ')
+		}
+		if (profError) {
+			message.error(profError)
+		} else {
+			message.success(" ! تمت إضافة الموظف  بنجاح");
+            form.resetFields();
+		}
 	};
 	const handleChange = (e) => {
 		setFormData({
