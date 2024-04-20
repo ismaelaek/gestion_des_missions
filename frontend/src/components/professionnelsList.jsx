@@ -36,8 +36,8 @@ const ProfessionnelsList = () => {
     const ProfList = () => {
         return (
             <table className=" w-full text-right">
-            {professionnels.map((profession) => {
-					return <ProfessionnelItem object={profession} caders={caders} directions={directions} />;
+            {professionnels.map((professionel) => {
+					return <ProfessionnelItem key={professionel.id} object={professionel} caders={caders} directions={directions} />;
 				})}
             </table>
         )

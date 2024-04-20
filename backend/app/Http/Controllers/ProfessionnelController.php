@@ -69,6 +69,7 @@ class ProfessionnelController extends Controller
      */
     public function destroy(Professionnel $professionnel)
     {
-        //
+        $professionnel->delete();
+        return response()->json(['message' => '! تم حذف الموظف بنجاح']);
     }
 }

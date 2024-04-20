@@ -33,7 +33,8 @@ Route::prefix('data')->middleware('auth:api')->group(function () {
     Route::get('/professionnels', [ProfessionnelController::class, 'index']);
 });
 
-Route::prefix('add')->group(function () {
-    Route::post('/professionnels', [ProfessionnelController::class, 'store']);
+Route::prefix('professionnels')->group(function () {
+    Route::post('/store', [ProfessionnelController::class, 'store']);
+    Route::delete('/{professionnel}', [ProfessionnelController::class, 'destroy']);
 
 });

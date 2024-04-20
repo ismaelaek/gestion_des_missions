@@ -30,7 +30,7 @@ const addProfessionnel = createAsyncThunk(
 	async (formData) => {
 		try {
 			const response = await axios.post(
-				"http://127.0.0.1:8000/api/add/professionnels",
+				"http://127.0.0.1:8000/api/professionnels/store",
 				formData,
 				{
 					headers: {
@@ -44,7 +44,21 @@ const addProfessionnel = createAsyncThunk(
 		}
 	}
 );
-
+const deleteProfessionnel = createAsyncThunk(
+	"deleteProfessionnel",
+	async (id) => {
+		try {
+			await axios.delete(`http://127.0.0.1:8000/api/professionnels/${id}`, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			});
+			return id; 
+		} catch (error) {
+			throw error;
+		}
+	}
+);
 const professionnelsSlice = createSlice({
 	name: "professionnels",
 	initialState,
@@ -63,23 +77,39 @@ const professionnelsSlice = createSlice({
 			.addCase(getProfessionnels.rejected, (state, action) => {
 				state.profIsLoading = false;
 				state.profError = action.error.message;
-            })
-            
-            .addCase(addProfessionnel.pending, (state)=> {
-                state.profIsLoading = true;
-                state.profError = null;
-            })
-            .addCase(addProfessionnel.fulfilled, (state, action) => {
-                state.profIsLoading = false;
-                state.professionnels.push(action.payload);
-                state.profError = null;
-            })
-            .addCase(addProfessionnel.rejected, (state, action) => {
-                state.profIsLoading = false;
-                state.profError = action.error.message;
-            });
+			})
+
+			.addCase(addProfessionnel.pending, (state) => {
+				state.profIsLoading = true;
+				state.profError = null;
+			})
+			.addCase(addProfessionnel.fulfilled, (state, action) => {
+				state.profIsLoading = false;
+				state.professionnels.push(action.payload);
+				state.profError = null;
+			})
+			.addCase(addProfessionnel.rejected, (state, action) => {
+				state.profIsLoading = false;
+				state.profError = action.error.message;
+			})
+
+			.addCase(deleteProfessionnel.pending, (state) => {
+				state.profIsLoading = true;
+				state.profError = null;
+			})
+			.addCase(deleteProfessionnel.fulfilled, (state, action) => {
+				state.profIsLoading = false;
+				state.professionnels = state.professionnels.filter(
+					(professionnel) => professionnel.id !== action.payload
+				);
+				state.profError = null;
+			})
+			.addCase(deleteProfessionnel.rejected, (state, action) => {
+				state.profIsLoading = false;
+				state.profError = action.error.message;
+			});
 	},
 });
 
-export { getProfessionnels, addProfessionnel };
+export { getProfessionnels, addProfessionnel, deleteProfessionnel};
 export default professionnelsSlice.reducer;
