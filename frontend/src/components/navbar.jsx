@@ -16,9 +16,9 @@ import { useNavigate } from "react-router-dom";
 
 const pages = [
 	{ title: "لائحة الموظفين", path: "professionnels" },
-	{ title: "لائحة المهمات", path: "missions" },
 	{ title: "اضافة موظف", path: "newproffesionnel" },
 	{ title: "اضافة مهمة", path: "newmission" },
+	{ title: "الرئيسية", path: "" },
 ];
 
 function Navbar() {

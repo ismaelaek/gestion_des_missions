@@ -3,22 +3,35 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, DatePicker, Form, Input, Select } from "antd";
 import { getJuridAppels, getJuridPremieres } from "../storage/jusridictionsSlice";
 import { getProfessionnels } from "../storage/professionnelsSlice";
+import moment from "moment";
+
 
 const { RangePicker } = DatePicker;
 
 const AddMission = () => {
 	const dispatch = useDispatch();
+	const [parentId, setParentId] = useState(null);
 	const { juriAppels, juriPremieres, jurIsLoading } = useSelector(
 		(state) => state.jusridictions
 	);
+
 	const { professionnels, profIsLoading } = useSelector(
         (state) => state.professionnels
-    );
+	);
+	
+	const primeresJuridctions = juriPremieres.filter(
+		(juri) => juri.IdJuridictionParent == parentId
+	);
 	const [loading, setLoading] = useState(false);
+	const [form] = Form.useForm();
+
+
 	useEffect(() => {
 		dispatch(getJuridAppels());
 		dispatch(getProfessionnels());
-	},[dispatch])
+		dispatch(getJuridPremieres())
+	}, [dispatch])
+
 	const onFinish = async (values) => {
 		setLoading(true);
 
@@ -32,11 +45,10 @@ const AddMission = () => {
 			message.error("حدث خطأ أثناء إضافة المهمة.");
 		}
 	};
-	const handleAppelChange = (value) => {
-		console.log(" clicked ",value);
-		dispatch(getJuridPremieres(value));
+	const handleDateChange = (dates) => {
+		const table = dates.map((date) => moment(date).toDate());
+		console.log(table);
 	}
-
 	return (
 		<main className="container pt-5 text-right">
 			<h1 className="text-4xl text-red-500 mb-3"> : إضافة مهمة</h1>
@@ -60,7 +72,7 @@ const AddMission = () => {
 						rules={[
 							{ required: true, message: "! الرجاء اختيار محكمة الاستئناف" },
 						]}>
-						<Select style={{ textAlign: "right" }} onChange={handleAppelChange}>
+						<Select style={{ textAlign: "right" }} onChange={value=> setParentId(value)}>
 							{juriAppels.map((juriAppel) => {
 								return (
 									<Select.Option key={juriAppel.id} value={juriAppel.id}>
@@ -81,9 +93,9 @@ const AddMission = () => {
 						rules={[
 							{ required: true, message: "! الرجاء اختيار المحكمة الإبتدائية" },
 						]}>
-						{juriPremieres.length > 0 ? (
+						{primeresJuridctions.length > 0 ? (
 							<Select style={{ textAlign: "right" }}>
-								{juriPremieres.map((juriPremiere) => {
+								{primeresJuridctions.map((juriPremiere) => {
 									return (
 										<Select.Option
 											key={juriPremiere.id}
@@ -93,7 +105,9 @@ const AddMission = () => {
 									);
 								})}
 							</Select>
-						) : null }
+						) : (
+							<Select disabled={!parentId} ></Select>
+						)}
 					</Form.Item>
 					<label htmlFor="primaryCourt">: المحكمة اﻹبتدائية</label>
 				</div>
@@ -106,7 +120,7 @@ const AddMission = () => {
 						rules={[
 							{ required: true, message: "! الرجاء اختيار تاريخ المهمة" },
 						]}>
-						<RangePicker />
+						<RangePicker  onChange={handleDateChange}/>
 					</Form.Item>
 					<label htmlFor="missionDate">: تاريخ المهمة</label>
 				</div>
@@ -119,12 +133,14 @@ const AddMission = () => {
 						rules={[{ required: true, message: "! الرجاء اختيار الموظف" }]}>
 						<Select style={{ textAlign: "right" }}>
 							{professionnels.map((professionnel) => {
-                                return (
-                                    <Select.Option key={professionnel.id} value={professionnel.id}>
-                                        {professionnel.nom} {professionnel.prenom}
-                                    </Select.Option>
-                                );
-                            })}
+								return (
+									<Select.Option
+										key={professionnel.id}
+										value={professionnel.id}>
+										{professionnel.nom} {professionnel.prenom}
+									</Select.Option>
+								);
+							})}
 						</Select>
 					</Form.Item>
 					<label htmlFor="employee">: الموظف</label>

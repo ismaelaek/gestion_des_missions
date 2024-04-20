@@ -29,11 +29,11 @@ const getJuridAppels = createAsyncThunk("getAppels", async () => {
 
 const getJuridPremieres = createAsyncThunk(
 	"getPremieres",
-	async ({ parentId }) => {
+	async () => {
 		try {
 			const token = getToken();
 			const response = await axios.get(
-				endPoint + "/2/" + parentId,
+				endPoint + "/2/",
 
 				{
 					headers: {
@@ -62,7 +62,6 @@ const juridictionsSlice = createSlice({
 				state.juriIsLoading = false;
 				state.juriAppels = action.payload;
 				state.juriError = null;
-				console.log(state.juriAppels);
 			})
 			.addCase(getJuridAppels.rejected, (state, action) => {
 				state.juriIsLoading = false;
@@ -71,13 +70,11 @@ const juridictionsSlice = createSlice({
 			.addCase(getJuridPremieres.pending, (state) => {
 				state.juriIsLoading = true;
 				state.juriError = null;
-				console.log(state.juriAppels);
 			})
 			.addCase(getJuridPremieres.fulfilled, (state, action) => {
 				state.juriIsLoading = false;
 				state.juriPremieres = action.payload;
 				state.juriError = null;
-				console.log(state.juriPremieres);
 			})
 			.addCase(getJuridPremieres.rejected, (state, action) => {
 				state.juriIsLoading = false;
