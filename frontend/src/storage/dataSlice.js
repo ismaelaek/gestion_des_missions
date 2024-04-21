@@ -4,6 +4,7 @@ import axios from "axios";
 const initialState = {
 	directions: [],
 	caders: [],
+	etatsMissions : [],
 	dataIsLoading: false,
 	error: null,
 };
@@ -35,6 +36,10 @@ const getDirections = getAsyncData(
 const getCaders = getAsyncData(
 	"getCaders",
 	"http://127.0.0.1:8000/api/data/caders"
+);
+const getEtats = getAsyncData(
+	"getEtats",
+	"http://127.0.0.1:8000/api/data/etats-missions"
 );
 
 
@@ -68,9 +73,22 @@ const dataSlice = createSlice({
 			.addCase(getCaders.rejected, (state, action) => {
 				state.dataIsLoading = false;
 				state.error = action.error.message;
+			})
+		
+			.addCase(getEtats.pending, (state) => {
+				state.dataIsLoading = true;
+				state.error = null;
+			})
+			.addCase(getEtats.fulfilled, (state, action) => {
+				state.dataIsLoading = false;
+				state.etatsMissions = action.payload;
+			})
+			.addCase(getEtats.rejected, (state, action) => {
+				state.dataIsLoading = false;
+				state.error = action.error.message;
 			});
 	},
 });
 
-export { getDirections, getCaders };
+export { getDirections, getCaders, getEtats };
 export default dataSlice.reducer;

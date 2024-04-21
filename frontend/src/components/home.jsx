@@ -1,23 +1,32 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfessionnels } from "../storage/professionnelsSlice";
-import { getCaders, getDirections } from "../storage/dataSlice";
+import { getJuridPremieres } from "../storage/jusridictionsSlice";
+import { getMissions } from "../storage/missionsSlice";
+import { getEtats } from "../storage/dataSlice";
 import { SlDrawer } from "react-icons/sl";
 import { Link } from "react-router-dom";
-import ProfessionnelItem from "./professionnelItem";
+import MissionItem from "./missionItem";
 import Loader from "./loader";
 
-const ProfessionnelsList = () => {
+const MissionsList = () => {
 	const dispatch = useDispatch();
-	const { professionnels, profIsLoading } = useSelector(
+	const {missions, missionsIsLoading} = useSelector(state => state.missions)
+	const { professionnels } = useSelector(
 		(state) => state.professionnels
 	);
-	const { caders, directions } = useSelector((state) => state.data);
+	const {juriPremieres } = useSelector(
+		(state) => state.jusridictions
+	);
+	const { etats, dataIsLoading } = useSelector(
+		(state) => state.data
+	);
 
 	useEffect(() => {
+		dispatch(getMissions());
 		dispatch(getProfessionnels());
-		dispatch(getCaders());
-		dispatch(getDirections());
+		dispatch(getJuridPremieres());
+		dispatch(getEtats());
 	}, [dispatch]);
 
 	const Empty = () => {
@@ -35,20 +44,32 @@ const ProfessionnelsList = () => {
 	const ProfList = () => {
 		return (
 			<table className=" w-full text-right">
-				{professionnels.map((professionel) => {
+				<tr>
+					<th></th>
+					{/* <th>الوجهة</th>
+					<th>الحالة</th>
+					<th>رقم الموظف</th> */}
+					<th>تاريخ التحرير</th>
+					<th>تاريخ الرجوع</th>
+					<th>تاريخ الخروج</th>
+					<th>نوع المهمة</th>
+					<th>رقم المهمة</th>
+				</tr>
+				{missions.map((mission) => {
 					return (
-						<ProfessionnelItem
-							key={professionel.id}
-							object={professionel}
-							caders={caders}
-							directions={directions}
+						<MissionItem
+							key={mission.id}
+							object={mission}
+							juridections={juriPremieres}
+							profs={professionnels}
+							etats={etats}
 						/>
 					);
 				})}
 			</table>
 		);
 	};
-	if (profIsLoading) {
+	if (missionsIsLoading) {
 		return (
 			<main className=" container flex h-96 justify-center items-center">
 				<Loader />
@@ -72,4 +93,4 @@ const ProfessionnelsList = () => {
 	);
 };
 
-export default ProfessionnelsList;
+export default MissionsList;

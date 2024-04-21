@@ -13,7 +13,8 @@ class EtatMissionController extends Controller
      */
     public function index()
     {
-        //
+        $etats = EtatMission::get();
+        return response()->json($etats);
     }
 
     /**

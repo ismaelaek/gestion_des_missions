@@ -1,13 +1,12 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./storage/store";
-import Home from "./components/home";
 import Login from "./auth/login";
 import Navbar from "./components/navbar";
 import AddMission from "./components/addmission";
 import AddProfessionnel from "./components/addprofessionel";
 import ProfessionnelsList from "./components/professionnelsList";
-import MissionsList from "./components/missionsList";
+import MissionsList from "./components/home";
 
 import "./App.css";
 
@@ -24,12 +23,11 @@ function App() {
 		<Provider store={store}>
 			<NavBarContainer />
 			<Routes>
-				<Route path="/" element={<Home />} />
+				<Route path="/" element={<MissionsList />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/newmission" element={<AddMission />} />
 				<Route path="/newproffesionnel" element={<AddProfessionnel />} />
 				<Route path="/professionnels" element={<ProfessionnelsList />} />
-				<Route path="/missions" element={<MissionsList />} />
 				<Route path="*" element={<h1>Page Not Found</h1>} />
 			</Routes>
 		</Provider>
