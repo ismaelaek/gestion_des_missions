@@ -3,10 +3,10 @@
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\CadreController;
 use App\Http\Controllers\DirectionController;
+use App\Http\Controllers\EtatMissionController;
 use App\Http\Controllers\JuridictionController;
 use App\Http\Controllers\MissionController;
 use App\Http\Controllers\ProfessionnelController;
-use App\Models\EtatMission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,9 +34,7 @@ Route::prefix('/data')->middleware('auth:api')->group(function () {
     Route::get('/caders', [CadreController::class, 'index']);
     Route::get('/professionnels', [ProfessionnelController::class, 'index']);
     Route::get('/missions', [MissionController::class, 'index']);
-    Route::get('/etats-missions', [EtatMission::class, 'index']);
-
-
+    Route::get('/etats-missions', [EtatMissionController::class, 'index']);
 });
 
 // TODO : fix invalid token on auth midllware
@@ -48,5 +46,5 @@ Route::prefix('/professionnels')->middleware('auth:api')->group(function () {
 
 Route::prefix('/missions')->middleware('auth:api')->group(function () {
     Route::post('/store', [MissionController::class, 'store']);
-    Route::delete('/{professionnel}', [MissionController::class, 'destroy']);
+    Route::delete('/{mission}', [MissionController::class, 'destroy']);
 });

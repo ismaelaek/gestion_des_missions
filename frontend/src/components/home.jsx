@@ -12,15 +12,11 @@ import Loader from "./loader";
 const MissionsList = () => {
 	const dispatch = useDispatch();
 	const {missions, missionsIsLoading} = useSelector(state => state.missions)
-	const { professionnels } = useSelector(
-		(state) => state.professionnels
-	);
+	const { professionnels } = useSelector((state) => state.professionnels);
 	const {juriPremieres } = useSelector(
 		(state) => state.jusridictions
 	);
-	const { etats, dataIsLoading } = useSelector(
-		(state) => state.data
-	);
+	const { etatsMissions, dataIsLoading } = useSelector((state) => state.data);
 
 	useEffect(() => {
 		dispatch(getMissions());
@@ -32,11 +28,11 @@ const MissionsList = () => {
 	const Empty = () => {
 		return (
 			<div className=" container flex flex-col justify-center items-center h-96">
-				<h1>لا يوجد موظفين</h1>
+				<h1>لا يوجد مهمـــات</h1>
 				<SlDrawer className=" text-9xl" />
 				<span className=" my-3">
-					إضغط على <Link to={"/newproffesionnel"}>إضافة موظف</Link> لإضافة موظف
-					جديد
+					إضغط على <Link to={"/newproffesionnel"}>إضافة مهمة</Link>
+					لإضافة مهمة جديد
 				</span>
 			</div>
 		);
@@ -44,28 +40,33 @@ const MissionsList = () => {
 	const ProfList = () => {
 		return (
 			<table className=" w-full text-right">
-				<tr>
-					<th></th>
-					{/* <th>الوجهة</th>
-					<th>الحالة</th>
-					<th>رقم الموظف</th> */}
-					<th>تاريخ التحرير</th>
-					<th>تاريخ الرجوع</th>
-					<th>تاريخ الخروج</th>
-					<th>نوع المهمة</th>
-					<th>رقم المهمة</th>
-				</tr>
-				{missions.map((mission) => {
-					return (
-						<MissionItem
-							key={mission.id}
-							object={mission}
-							juridections={juriPremieres}
-							profs={professionnels}
-							etats={etats}
-						/>
-					);
-				})}
+				<thead>
+					<tr>
+						<th></th>
+						<th>الوجهة</th>
+						<th>الحالة</th>
+						<th>رقم الموظف</th>
+						<th>تاريخ التحرير</th>
+						<th>تاريخ الرجوع</th>
+						<th>تاريخ الخروج</th>
+						<th>نوع المهمة</th>
+						<th>رقم المهمة</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					{missions.map((mission) => {
+						return (
+							<MissionItem
+								key={mission.id}
+								object={mission}
+								juridections={juriPremieres}
+								profs={professionnels}
+								etats={etatsMissions}
+							/>
+						);
+					})}
+				</tbody>
 			</table>
 		);
 	};

@@ -64,41 +64,55 @@ const deleteMission = createAsyncThunk(
 	}
 );
 
-const missionsSlice = createSlice({
+export const missionsSlice = createSlice({
     name: "missions",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder
-            .addCase(getMissions.pending, (state) => {
-                state.missionIsLoading = true;
-                state.missionError = null;
-            })
-            .addCase(getMissions.fulfilled, (state, action) => {
-                state.missionIsLoading = false;
-                state.missions = action.payload;
-                state.missionError = null;
-            })
-            .addCase(getMissions.rejected, (state, action) => {
-                state.missionIsLoading = false;
-                state.missionError = action.error.message;
-            })
-            
-            .addCase(addMission.pending, (state) => {
-                state.missionIsLoading = true;
-                state.missionError = null;
-            })
-            .addCase(addMission.fulfilled,
-                (state, action) => {
-                    state.missionIsLoading = false;
-                    state.missions.push(action.payload);
-                    state.missionError = null;
-                }
-            )
-            .addCase(addMission.rejected, (state, action) => {
-                state.missionIsLoading = false;
-                state.missionError = action.error.message;
-            })
+		builder
+			.addCase(getMissions.pending, (state) => {
+				state.missionIsLoading = true;
+				state.missionError = null;
+			})
+			.addCase(getMissions.fulfilled, (state, action) => {
+				state.missionIsLoading = false;
+				state.missions = action.payload;
+				state.missionError = null;
+			})
+			.addCase(getMissions.rejected, (state, action) => {
+				state.missionIsLoading = false;
+				state.missionError = action.error.message;
+			})
+
+			.addCase(addMission.pending, (state) => {
+				state.missionIsLoading = true;
+				state.missionError = null;
+			})
+			.addCase(addMission.fulfilled, (state, action) => {
+				state.missionIsLoading = false;
+				state.missions.push(action.payload);
+				state.missionError = null;
+			})
+			.addCase(addMission.rejected, (state, action) => {
+				state.missionIsLoading = false;
+				state.missionError = action.error.message;
+			})
+
+			.addCase(deleteMission.pending, (state) => {
+				state.missionIsLoading = true;
+				state.missionError = null;
+			})
+			.addCase(deleteMission.fulfilled, (state, action) => {
+				state.missionIsLoading = false;
+				state.missions = state.missions.filter(
+					(mission) => mission.id !== action.payload
+				);
+				state.missionError = null;
+			})
+			.addCase(deleteMission.rejected, (state, action) => {
+				state.missionIsLoading = false;
+				state.missionError = action.error.message;
+			});
     }
 });
 

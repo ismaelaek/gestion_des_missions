@@ -35,16 +35,19 @@ const ProfessionnelsList = () => {
 	const ProfList = () => {
 		return (
 			<table className=" w-full text-right">
-				{professionnels.map((professionel) => {
-					return (
-						<ProfessionnelItem
-							key={professionel.id}
-							object={professionel}
-							caders={caders}
-							directions={directions}
-						/>
-					);
-				})}
+				<thead></thead>
+				<tbody>
+					{professionnels.map((professionel) => {
+						return (
+							<ProfessionnelItem
+								key={professionel.id}
+								object={professionel}
+								caders={caders}
+								directions={directions}
+							/>
+						);
+					})}
+				</tbody>
 			</table>
 		);
 	};

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Validator;
-use App\Http\Requests\UpdateMissionRequest;
 use App\Models\Mission;
 use Illuminate\Http\Request;
 
@@ -71,7 +70,7 @@ class MissionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMissionRequest $request, Mission $mission)
+    public function update(Request $request, Mission $mission)
     {
         //
     }
@@ -81,6 +80,17 @@ class MissionController extends Controller
      */
     public function destroy(Mission $mission)
     {
-        //
+        try {
+            $destroy = $mission->delete();
+
+            if ($destroy) {
+                return response()->json(['message' => '! تم حذف المهمة بنجاح']);
+            } else {
+                return response()->json(['message' => "error deleting"], 500);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+
     }
 }
