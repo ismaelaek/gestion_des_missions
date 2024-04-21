@@ -9,6 +9,13 @@ class Mission extends Model
 {
     use HasFactory ;
     protected $fillable = [
-        'NummeroMission', 'TypeMission', 'DateAller', 'DateRetour', 'DateEdition'
+        'NummeroMission',
+        'TypeMission',
+        'DateAller',
+        'DateRetour',
+        'DateEdition',
+        'idEtatMission',
+        'idProfessionnel',
+        'idJuridiction',
     ];
 }

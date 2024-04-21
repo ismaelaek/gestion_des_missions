@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreMissionRequest;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\UpdateMissionRequest;
 use App\Models\Mission;
+use Illuminate\Http\Request;
 
 class MissionController extends Controller
 {
@@ -13,23 +14,42 @@ class MissionController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $missions = Mission::get();
+        return response()->json($missions);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreMissionRequest $request)
+    public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'NummeroMission' => 'required|string',
+            'TypeMission' => 'required|string',
+            'DateAller' => 'required|date',
+            'DateRetour' => 'required|date',
+            'DateEdition' => 'required|date',
+            'idEtatMission' => 'required|integer',
+            'idJuridiction' => 'required|integer',
+            'idProfessionnel' => 'required|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $mission = new Mission();
+        $mission->NummeroMission = $request->NummeroMission;
+        $mission->TypeMission = $request->TypeMission;
+        $mission->DateAller = $request->DateAller;
+        $mission->DateRetour = $request->DateRetour;
+        $mission->DateEdition = $request->DateEdition;
+        $mission->idEtatMission = $request->idEtatMission;
+        $mission->idJuridiction = $request->idJuridiction;
+        $mission->idProfessionnel = $request->idProfessionnel;
+        $mission->save();
+
+        return response()->json(['message' => 'Mission created successfully'], 201);
     }
 
     /**

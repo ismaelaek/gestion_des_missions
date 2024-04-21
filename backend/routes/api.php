@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\CadreController;
 use App\Http\Controllers\DirectionController;
 use App\Http\Controllers\JuridictionController;
+use App\Http\Controllers\MissionController;
 use App\Http\Controllers\ProfessionnelController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -31,10 +32,17 @@ Route::prefix('/data')->middleware('auth:api')->group(function () {
     Route::get('/directions', [DirectionController::class, 'index']);
     Route::get('/caders', [CadreController::class, 'index']);
     Route::get('/professionnels', [ProfessionnelController::class, 'index']);
+    Route::get('/missions', [MissionController::class, 'index']);
+
 });
 
 Route::prefix('/professionnels')->group(function () {
     Route::post('/store', [ProfessionnelController::class, 'store']);
     Route::delete('/{professionnel}', [ProfessionnelController::class, 'destroy']);
 
+});
+
+Route::prefix('/missions')->group(function () {
+    Route::post('/store', [MissionController::class, 'store']);
+    Route::delete('/{professionnel}', [MissionController::class, 'destroy']);
 });
