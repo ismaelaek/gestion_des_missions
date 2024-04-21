@@ -29,12 +29,12 @@ const getMissions = createAsyncThunk("getMissions", async () => {
 });
 const addMission = createAsyncThunk(
 	"addMission",
-	async (juriFormData) => {
+	async (missionFormData) => {
 		try {
 			const token = getToken();
 			const response = await axios.post(
 				"http://127.0.0.1:8000/api/missions/store",
-				juriFormData,
+				missionFormData,
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,

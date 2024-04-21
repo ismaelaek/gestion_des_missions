@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, DatePicker, Form, Input, Select } from "antd";
+import { Button, DatePicker, Form, Input, Select, message } from "antd";
 import {
 	getJuridAppels,
 	getJuridPremieres,
@@ -21,7 +21,7 @@ const AddMission = () => {
 	const [loading, setLoading] = useState(false);
 	const [form] = Form.useForm();
 
-	const [juriFormData, setJuriFormData] = useState({
+	const [missionFormData, setJuriFormData] = useState({
 		NummeroMission: randomId,
 		TypeMission: "",
 		DateAller: "",
@@ -51,12 +51,14 @@ const AddMission = () => {
 	}, [dispatch]);
 
 	const onFinish = () => {
-		console.log(juriFormData);
+		dispatch(addMission(missionFormData));
+		message.success(" ! تمت إضافة المهمة  بنجاح");
+		form.resetFields();
 	};
 
-	const handleDateChange = (dates) => {
-		const [startDate, endDate] = dates.map((date) =>
-			moment(date).format("YYYY-MM-DD")
+	const handleDateChange = (values) => {
+		const [startDate, endDate] = values.map((date) =>
+			moment(date.$d).format("YYYY-MM-DD")
 		);
 		setJuriFormData((prevData) => ({
 			...prevData,

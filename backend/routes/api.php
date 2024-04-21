@@ -36,6 +36,7 @@ Route::prefix('/data')->middleware('auth:api')->group(function () {
 
 });
 
+// TODO : fix invalid token on auth midllware
 Route::prefix('/professionnels')->group(function () {
     Route::post('/store', [ProfessionnelController::class, 'store']);
     Route::delete('/{professionnel}', [ProfessionnelController::class, 'destroy']);
