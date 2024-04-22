@@ -52,32 +52,40 @@ class MissionController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Mission $mission)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Mission $mission)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Mission $mission)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'NummeroMission' => 'required|string',
+            'TypeMission' => 'required|string',
+            'DateAller' => 'required',
+            'DateRetour' => 'required',
+            'DateEdition' => 'required',
+            'idEtatMission' => 'required|string',
+            'idJuridiction' => 'required|string',
+            'idProfessionnel' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $mission->update([
+            'NummeroMission' => $request->NummeroMission,
+            'TypeMission' => $request->TypeMission,
+            'DateAller' => $request->DateAller,
+            'DateRetour' => $request->DateRetour,
+            'DateEdition' => $request->DateEdition,
+            'idEtatMission' => $request->idEtatMission,
+            'idJuridiction' => $request->idJuridiction,
+            'idProfessionnel' => $request->idProfessionnel,
+        ]);
+
+        return response()->json(['message' => 'Mission updated successfully']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(Mission $mission)
     {
         try {

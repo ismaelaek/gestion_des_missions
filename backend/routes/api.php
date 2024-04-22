@@ -47,4 +47,5 @@ Route::prefix('/professionnels')->middleware('auth:api')->group(function () {
 Route::prefix('/missions')->middleware('auth:api')->group(function () {
     Route::post('/store', [MissionController::class, 'store']);
     Route::delete('/{mission}', [MissionController::class, 'destroy']);
+    Route::put('/{mission}/update', [MissionController::class, 'update']);
 });
