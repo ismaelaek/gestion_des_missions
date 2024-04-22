@@ -9,13 +9,14 @@ theis project is suggested and supervised by **Mr. Oussama Benhommane** as an in
 
 ## Technologies
 
-- Laravel 8
-- React 17
+- Laravel 10
+- React 18
 - MySQL
 - Bootstrap 5
 - Material UI
 - Ant Design
 - Redux
+- tailwindCSS
 
 ## Getting Started
 
