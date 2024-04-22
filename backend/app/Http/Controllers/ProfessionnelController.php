@@ -61,7 +61,28 @@ class ProfessionnelController extends Controller
      */
     public function update(Request $request, Professionnel $professionnel)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'NumeroSomme' => 'required|string|max:255',
+            'Email' => 'required|email|unique:professionnels,Email,' . $professionnel->id,
+            'IdCadre' => 'required|exists:cadres,id',
+            'IdDirection' => 'required|exists:directions,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $professionnel->nom = $request->nom;
+        $professionnel->prenom = $request->prenom;
+        $professionnel->NumeroSomme = $request->NumeroSomme;
+        $professionnel->Email = $request->Email;
+        $professionnel->IdCadre = $request->IdCadre;
+        $professionnel->IdDirection = $request->IdDirection;
+        $professionnel->save();
+
+        return response()->json(['message' => '! تم تحديث بيانات الموظف بنجاح'], 200);
     }
 
     /**
