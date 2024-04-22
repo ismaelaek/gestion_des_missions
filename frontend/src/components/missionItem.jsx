@@ -18,7 +18,7 @@ const MissionItem = ({ object, etats, profs, juridections }) => {
 	return (
 		<tr>
 			<td className="flex gap-1">
-				<Link to={`/editproffesionnel/${object.id}`}>
+				<Link>
 					<button className="btn btn-success">
 						<div className=" flex  gap-1">
 							<FaPrint className="mt-1" />
@@ -26,7 +26,7 @@ const MissionItem = ({ object, etats, profs, juridections }) => {
 						</div>
 					</button>
 				</Link>
-				<Link to={`/editproffesionnel/${object.id}`}>
+				<Link to={`/editmission/${object.id}`}>
 					<button className="btn btn-primary">
 						<div className=" flex  gap-1">
 							<FaEdit className="mt-1" />

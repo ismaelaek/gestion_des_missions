@@ -47,6 +47,27 @@ const addMission = createAsyncThunk(
 		}
 	}
 );
+const updateMission = createAsyncThunk(
+	"updateMission",
+	async (updatedMissionData) => {
+		try {
+			const token = getToken();
+			const response = await axios.put(
+				`http://127.0.0.1:8000/api/missions/${updatedMissionData.id}/update`,
+				updatedMissionData,
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+			return response.data;
+		} catch (error) {
+			throw error;
+		}
+	}
+);
+
 const deleteMission = createAsyncThunk(
 	"deleteMission",
 	async (id) => {
@@ -119,6 +140,6 @@ export const missionsSlice = createSlice({
 
 
 
-export { getMissions, addMission, deleteMission };
+export { getMissions, addMission, deleteMission, updateMission };
 
 export default missionsSlice.reducer;

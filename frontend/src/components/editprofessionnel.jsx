@@ -127,7 +127,7 @@ const EditProfessionnel = () => {
 						<Form.Item
 							name="Email"
 							wrapperCol={{ span: 24 }}
-							style={{ textAlign: "right", marginBottom: 0 }}
+                            style={{ textAlign: "right", marginBottom: 0 }}
 							rules={[
 								{
 									required: true,
@@ -140,7 +140,8 @@ const EditProfessionnel = () => {
 							<Input
 								style={{ textAlign: "right" }}
 								name="Email"
-								onChange={handleChange}
+                                onChange={handleChange}
+                                disabled={true}
 							/>
 						</Form.Item>
 						<label htmlFor="email">: البريد اﻹلكتروني</label>
