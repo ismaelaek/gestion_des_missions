@@ -12,7 +12,7 @@ const ProfessionnelsList = () => {
 	const { professionnels, profIsLoading } = useSelector(
 		(state) => state.professionnels
 	);
-	const { caders, directions } = useSelector((state) => state.data);
+	const { caders } = useSelector((state) => state.data);
 
 	useEffect(() => {
 		dispatch(getProfessionnels());
@@ -35,7 +35,16 @@ const ProfessionnelsList = () => {
 	const ProfList = () => {
 		return (
 			<table className=" w-full text-right">
-				<thead></thead>
+				<thead>
+					<tr>
+						<th></th>
+						<th>اﻹطار</th>
+						<th>رقم التأجير</th>
+						<th>البريد اﻹلكتروني</th>
+						<th>اﻹسم</th>
+						<th>النسب</th>
+					</tr>
+				</thead>
 				<tbody>
 					{professionnels.map((professionel) => {
 						return (
@@ -43,7 +52,6 @@ const ProfessionnelsList = () => {
 								key={professionel.id}
 								object={professionel}
 								caders={caders}
-								directions={directions}
 							/>
 						);
 					})}

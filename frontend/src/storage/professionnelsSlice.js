@@ -48,6 +48,28 @@ const addProfessionnel = createAsyncThunk(
 		}
 	}
 );
+
+const updateProfessionnel = createAsyncThunk(
+	"updateProfessionnel",
+	async (formData) => {
+		try {
+			const token = getToken();
+			const response = await axios.put(
+				`http://127.0.0.1:8000/api/professionnels/${formData.id}/update`,
+				formData,
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+			return response.data;
+		} catch (error) {
+			throw error;
+		}
+	}
+);
+
 const deleteProfessionnel = createAsyncThunk(
 	"deleteProfessionnel",
 	async (id) => {
@@ -112,9 +134,26 @@ const professionnelsSlice = createSlice({
 			.addCase(deleteProfessionnel.rejected, (state, action) => {
 				state.profIsLoading = false;
 				state.profError = action.error.message;
+			})
+			.addCase(updateProfessionnel.pending, (state) => {
+				state.profIsLoading = true;
+				state.profError = null;
+			})
+			.addCase(updateProfessionnel.fulfilled, (state, action) => {
+				state.profIsLoading = false;
+				state.professionnels = state.professionnels.map((professionnel) =>
+					professionnel.id === action.payload.id
+						? action.payload
+						: professionnel
+				);
+				state.profError = null;
+			})
+			.addCase(updateProfessionnel.rejected, (state, action) => {
+				state.profIsLoading = false;
+				state.profError = action.error.message;
 			});
 	},
 });
 
-export { getProfessionnels, addProfessionnel, deleteProfessionnel };
+export { getProfessionnels, addProfessionnel,updateProfessionnel, deleteProfessionnel };
 export default professionnelsSlice.reducer;

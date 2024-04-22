@@ -1,53 +1,51 @@
 import { useEffect, useState } from "react";
-import { FaUserPlus } from "react-icons/fa";
+import { FaUserEdit } from "react-icons/fa"; // Changed to FaUserEdit for edit icon
 import { Button, Input, Select, Form, message, ConfigProvider } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { getDirections, getCaders } from "../storage/dataSlice";
-import { addProfessionnel } from "../storage/professionnelsSlice";
+import { getProfessionnels, updateProfessionnel } from "../storage/professionnelsSlice";
+import { useParams } from "react-router-dom";
 import arEG from "antd/lib/locale/ar_EG";
 
-const AddProfessionnel = () => {
-	const dispatch = useDispatch();
+const EditProfessionnel = () => {
+    const dispatch = useDispatch();
+    const { id } = useParams();
+    const { professionnels } = useSelector(state => state.professionnels)
+    const professionnel = professionnels.find((item) => item.id == id);
 	const { directions, caders, dataIsLoading, error } = useSelector(
-		state => state.data
-	);
-	const { profIsLoading, profError } = useSelector(
-		(state) => state.professionnels
+		(state) => state.data
 	);
 
 	const [form] = Form.useForm();
-	const [formData, setFormData] = useState({
-		nom: "",
-		prenom: "",
-		Email: "",
-		NumeroSomme: "",
-		IdDirection: "",
-		IdCadre: "",
+    const [formData, setFormData] = useState({
+        id: id,
+		nom: professionnel.nom,
+		prenom: professionnel.prenom,
+		Email: professionnel.Email,
+		NumeroSomme: professionnel.NumeroSomme,
+		IdDirection: professionnel.IdDirection,
+		IdCadre: professionnel.IdCadre,
 	});
 
-	useEffect(() => {
+    useEffect(() => {
+        dispatch(getProfessionnels());
 		dispatch(getDirections());
 		dispatch(getCaders());
 	}, []);
 
 	const onFinish = () => {
-		dispatch(addProfessionnel(formData));
-		if (profIsLoading) {
-			message.loading('جاري التحميل ')
-		}
-		if (profError) {
-			message.error(profError)
-		} else {
-			message.success(" ! تمت إضافة الموظف  بنجاح");
-            form.resetFields();
-		}
+        dispatch(updateProfessionnel(formData)); 
+        message.success("! تم تعديل الموظف بنجاح");
+        form.resetFields();
 	};
+
 	const handleChange = (e) => {
 		setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
+			...formData,
+			[e.target.name]: e.target.value,
 		});
-	}
+	};
+
 	const handleDirectionChange = (value) => {
 		setFormData({
 			...formData,
@@ -61,10 +59,11 @@ const AddProfessionnel = () => {
 			IdCadre: value,
 		});
 	};
+
 	return (
 		<ConfigProvider direction="rtl" locale={arEG}>
 			<main className="container pt-5 text-right">
-				<h1 className="text-4xl text-red-500 mb-3"> : إضافة موظف</h1>
+				<h1 className="text-4xl text-red-500 mb-3">: تعديل بيانات الموظف</h1>
 				<Form
 					form={form}
 					onFinish={onFinish}
@@ -76,7 +75,9 @@ const AddProfessionnel = () => {
 							wrapperCol={{ span: 24 }}
 							className=" text-right w-full"
 							style={{ textAlign: "end", marginBottom: 0 }}
-							rules={[{ required: true, message: "! الرجاء إدخال الاسم" }]}>
+							rules={[{ required: true, message: "! الرجاء إدخال الاسم" }]}
+							initialValue={formData.prenom} 
+						>
 							<Input
 								style={{ textAlign: "right" }}
 								name="prenom"
@@ -91,7 +92,9 @@ const AddProfessionnel = () => {
 							name="nom"
 							wrapperCol={{ span: 24 }}
 							style={{ textAlign: "end", marginBottom: 0 }}
-							rules={[{ required: true, message: "! الرجاء إدخال النسب" }]}>
+							rules={[{ required: true, message: "! الرجاء إدخال النسب" }]}
+							initialValue={formData.nom} 
+						>
 							<Input
 								style={{ textAlign: "right" }}
 								onChange={handleChange}
@@ -108,7 +111,9 @@ const AddProfessionnel = () => {
 							style={{ textAlign: "right", marginBottom: 0 }}
 							rules={[
 								{ required: true, message: "! الرجاء إدخال رقم التأجير" },
-							]}>
+							]}
+							initialValue={formData.NumeroSomme} 
+						>
 							<Input
 								style={{ textAlign: "right" }}
 								name="NumeroSomme"
@@ -129,7 +134,9 @@ const AddProfessionnel = () => {
 									message: "! الرجاء إدخال البريد الإلكتروني",
 									type: "email",
 								},
-							]}>
+							]}
+							initialValue={formData.Email} 
+						>
 							<Input
 								style={{ textAlign: "right" }}
 								name="Email"
@@ -144,7 +151,9 @@ const AddProfessionnel = () => {
 							name="IdDirection"
 							wrapperCol={{ span: 24 }}
 							style={{ textAlign: "right", marginBottom: 0 }}
-							rules={[{ required: true, message: "! الرجاء اختيار المديرية" }]}>
+							rules={[{ required: true, message: "! الرجاء اختيار المديرية" }]}
+							initialValue={formData.IdDirection} 
+						>
 							<Select
 								loading={dataIsLoading}
 								placeholder="اختر المديرية"
@@ -165,7 +174,9 @@ const AddProfessionnel = () => {
 							name="IdCadre"
 							wrapperCol={{ span: 24 }}
 							style={{ textAlign: "right", marginBottom: 0 }}
-							rules={[{ required: true, message: "! الرجاء اختيار الإطار" }]}>
+							rules={[{ required: true, message: "! الرجاء اختيار الإطار" }]}
+							initialValue={formData.IdCadre} 
+						>
 							<Select
 								loading={dataIsLoading}
 								placeholder="اختر الإطار"
@@ -185,10 +196,9 @@ const AddProfessionnel = () => {
 						<Button
 							type="primary"
 							htmlType="submit"
-							className="w-full flex justify-center submit-btn"
-							loading={profIsLoading}>
-							{!profIsLoading && <FaUserPlus className=" mt-1 mr-2" />}
-							<span> إضافة الموظف</span>
+							className="w-full flex justify-center submit-btn">
+							<FaUserEdit className=" mt-1 mr-2" /> {/* Changed to edit icon */}
+							<span> تعديل بيانات الموظف</span>
 						</Button>
 					</div>
 				</Form>
@@ -197,4 +207,4 @@ const AddProfessionnel = () => {
 	);
 };
 
-export default AddProfessionnel;
+export default EditProfessionnel;

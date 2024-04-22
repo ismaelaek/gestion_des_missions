@@ -43,14 +43,14 @@ const MissionsList = () => {
 				<thead>
 					<tr>
 						<th></th>
-						<th>الوجهة</th>
+						<th className=" text-center">الوجهة</th>
 						<th>الحالة</th>
-						<th>رقم الموظف</th>
-						<th>تاريخ التحرير</th>
-						<th>تاريخ الرجوع</th>
-						<th>تاريخ الخروج</th>
-						<th>نوع المهمة</th>
-						<th>رقم المهمة</th>
+						<th>ر. الموظف</th>
+						{/* <th>تاريخ التحرير</th> */}
+						<th>الرجوع</th>
+						<th>الخروج</th>
+						<th>نوع</th>
+						<th>رقم</th>
 					</tr>
 				</thead>
 

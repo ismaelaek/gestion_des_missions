@@ -7,7 +7,7 @@ import AddMission from "./components/addmission";
 import AddProfessionnel from "./components/addprofessionel";
 import ProfessionnelsList from "./components/professionnelsList";
 import MissionsList from "./components/home";
-
+import EditProfessionnel from "./components/editprofessionnel";
 import "./App.css";
 
 // resolve conflicts 
@@ -28,6 +28,10 @@ function App() {
 				<Route path="/newmission" element={<AddMission />} />
 				<Route path="/newproffesionnel" element={<AddProfessionnel />} />
 				<Route path="/professionnels" element={<ProfessionnelsList />} />
+				<Route
+					path="/editproffesionnel/:id"
+					element={<EditProfessionnel />}
+				/>{" "}
 				<Route path="*" element={<h1>Page Not Found</h1>} />
 			</Routes>
 		</Provider>
