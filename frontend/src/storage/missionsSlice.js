@@ -122,6 +122,21 @@ export const missionsSlice = createSlice({
 				state.missionError = action.error.message;
 			})
 
+            .addCase(updateMission.pending, (state) => {
+                state.missionIsLoading = true;
+                state.missionError = null;
+			})
+			.addCase(updateMission.fulfilled, (state, action) => {
+				state.missionIsLoading = false;
+                state.missions = state.missions.map((mission) =>
+                    mission.id === action.payload.id? action.payload : mission
+                );
+                state.missionError = null;
+			})
+			.addCase(updateMission.rejected, (state, action) => {
+                state.missionIsLoading = false;
+                state.missionError = action.error.message;
+            })
 			.addCase(deleteMission.pending, (state) => {
 				state.missionIsLoading = true;
 				state.missionError = null;
