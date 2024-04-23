@@ -25,8 +25,8 @@ class MissionController extends Controller
         $validator = Validator::make($request->all(), [
             'NummeroMission' => 'required|string',
             'TypeMission' => 'required|string',
-            'DateAller' => 'required|date',
-            'DateRetour' => 'required|date',
+            'DateAller' => 'required|string',
+            'DateRetour' => 'required|string',
             'DateEdition' => 'required|date',
             'idEtatMission' => 'required|integer',
             'idJuridiction' => 'required|integer',
@@ -59,9 +59,9 @@ class MissionController extends Controller
         $validator = Validator::make($request->all(), [
             'NummeroMission' => 'required|string',
             'TypeMission' => 'required|string',
-            'DateAller' => 'required',
-            'DateRetour' => 'required',
-            'DateEdition' => 'required',
+            'DateAller' => 'required|date',
+            'DateRetour' => 'required|date',
+            'DateEdition' => 'required|date',
             'idEtatMission' => 'required|string',
             'idJuridiction' => 'required|string',
             'idProfessionnel' => 'required|string',

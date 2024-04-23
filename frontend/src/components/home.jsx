@@ -84,7 +84,9 @@ const MissionsList = () => {
 			) : (
 				<>
 					<div className=" flex justify-between">
-						<Link to={"/newmission"}>إضافة مهمة</Link>
+						<Link to={"/newmission"} className=" btn btn-outline-primary h-10">
+							إضافة مهمة
+						</Link>
 						<h1 className="text-4xl text-red-500 mb-5">قائمة المهمات</h1>
 					</div>
 					<MainList />

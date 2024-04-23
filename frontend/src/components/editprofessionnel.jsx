@@ -141,7 +141,6 @@ const EditProfessionnel = () => {
 								style={{ textAlign: "right" }}
 								name="Email"
                                 onChange={handleChange}
-                                disabled={true}
 							/>
 						</Form.Item>
 						<label htmlFor="email">: البريد اﻹلكتروني</label>

@@ -73,7 +73,9 @@ const ProfessionnelsList = () => {
 			) : (
 				<>
 					<div className=" flex justify-between">
-						<Link to={"/newproffesionnel"}>إضافة موظف</Link>
+						<Link to={"/newproffesionnel"} className=" btn btn-outline-primary h-10">
+							إضافة موظف
+						</Link>
 						<h1 className="text-4xl text-red-500 mb-5">قائمة الموظفين</h1>
 					</div>
 					<ProfList />

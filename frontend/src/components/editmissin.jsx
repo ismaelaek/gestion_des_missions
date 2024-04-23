@@ -7,13 +7,15 @@ import {
 } from "../storage/jusridictionsSlice";
 import { getProfessionnels } from "../storage/professionnelsSlice";
 import { getMissions , updateMission} from "../storage/missionsSlice";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
+import { getEtats } from "../storage/dataSlice";
 
 const { RangePicker } = DatePicker;
 
 const EditMission = () => {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
     const { id } = useParams();
 	
 	const [form] = Form.useForm();
@@ -41,7 +43,9 @@ const EditMission = () => {
 
 	const primeresJuridctions = juriPremieres.filter(
 		(juri) => juri.IdJuridictionParent == parentId
-    );
+	);
+	
+	const { etatsMissions } = useSelector(state => state.data); 
 
 
     const [missionFormData, setJuriFormData] = useState({
@@ -56,7 +60,8 @@ const EditMission = () => {
 			idJuridiction: mission.idJuridiction,
 		});
     
-    useEffect(() => {
+	useEffect(() => {
+		dispatch(getEtats());
         dispatch(getMissions());
 		dispatch(getJuridAppels());
 		dispatch(getProfessionnels());
@@ -65,8 +70,8 @@ const EditMission = () => {
 
 	const onFinish = () => {
 		dispatch(updateMission(missionFormData));
-		message.success(" ! تمت إضافة المهمة  بنجاح");
-		form.resetFields();
+		// message.success(" ! تمت تعديل المهمة  بنجاح");
+		// navigate('/');
 	};
 
 	const handleDateChange = (values) => {
@@ -130,6 +135,34 @@ const EditMission = () => {
 						</Select>
 					</Form.Item>
 					<label htmlFor="appealCourt">: محكمة الاستئناف</label>
+				</div>
+
+				<div>
+					<Form.Item
+						name="etat"
+						wrapperCol={{ span: 24 }}
+						style={{ textAlign: "end", marginBottom: 0 }}
+						initialValue={mission.idEtatMission}
+						rules={[{ required: true, message: "! الرجاء اختيار الحالة" }]}>
+						<Select
+							style={{ textAlign: "right" }}
+							name="idEtatMission"
+							onChange={(value) =>
+								setJuriFormData((prevData) => ({
+									...prevData,
+									idEtatMission: value,
+								}))
+							}>
+							{etatsMissions.map((etat) => {
+								return (
+									<Select.Option key={etat.id} value={etat.id}>
+										{etat.EtatLibelle_ar}
+									</Select.Option>
+								);
+							})}
+						</Select>
+					</Form.Item>
+					<label htmlFor="employee">: حالة المهمة</label>
 				</div>
 
 				<div>
