@@ -20,6 +20,15 @@ function App() {
 			return <Navbar />;
 	};
 
+	const FooterContaineer= () => {
+		const location = useLocation();
+		if (location.pathname !== "/login")
+			return <p className="footer-container text-center text-xs w-full bg-white px-2 mb-0"
+			>
+				جميع الحقوق محفوظة © 2023
+			</p>;
+	};
+
 	return (
 		<Provider store={store}>
 			<NavBarContainer />
@@ -33,6 +42,7 @@ function App() {
 				<Route path="/editmission/:id" element={<EditMission />} />
 				<Route path="*" element={<h1>Page Not Found</h1>} />
 			</Routes>
+			<FooterContaineer />
 		</Provider>
 	);
 }

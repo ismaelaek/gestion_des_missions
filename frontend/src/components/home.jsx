@@ -16,7 +16,7 @@ const MissionsList = () => {
 	const {juriPremieres } = useSelector(
 		(state) => state.jusridictions
 	);
-	const { etatsMissions, dataIsLoading } = useSelector((state) => state.data);
+	const { etatsMissions } = useSelector((state) => state.data);
 
 	useEffect(() => {
 		dispatch(getMissions());
@@ -37,7 +37,7 @@ const MissionsList = () => {
 			</div>
 		);
 	};
-	const ProfList = () => {
+	const MainList = () => {
 		return (
 			<table className=" w-full text-right">
 				<thead>
@@ -79,15 +79,15 @@ const MissionsList = () => {
 	}
 	return (
 		<main className=" container  pt-3 text-right">
-			{professionnels.length === 0 ? (
+			{missions.length === 0 ? (
 				<Empty />
 			) : (
 				<>
 					<div className=" flex justify-between">
 						<Link to={"/newmission"}>إضافة مهمة</Link>
-						<h1 className="text-4xl text-red-500 mb-3">قائمة المهمات</h1>
+						<h1 className="text-4xl text-red-500 mb-5">قائمة المهمات</h1>
 					</div>
-					<ProfList />
+					<MainList />
 				</>
 			)}
 		</main>

@@ -16,7 +16,7 @@ const MissionItem = ({ object, etats, profs, juridections }) => {
 		dispatch(deleteMission(object.id));
 	};
 	return (
-		<tr>
+		<tr className=" py-2">
 			<td className="flex gap-1">
 				<Link>
 					<button className="btn btn-success">

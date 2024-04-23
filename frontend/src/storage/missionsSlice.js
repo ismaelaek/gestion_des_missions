@@ -58,6 +58,9 @@ const updateMission = createAsyncThunk(
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
+						'Access-Control-Allow-Origin': '*',
+						'Access-Control-Allow-Methods': 'PUT',
+						'Access-Control-Allow-Headers': '*',
 					},
 				}
 			);

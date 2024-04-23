@@ -62,108 +62,113 @@ function Navbar() {
 	}
 
 	return (
-		<AppBar position="static">
-			<Container maxWidth="xl">
-				<Toolbar disableGutters>
-					<Box sx={{ flexGrow: 0 }}>
-						<Tooltip>
+		<nav className=''>
+			<span >
+				نظــام إدارة المهـــــام
+			</span>
+			<AppBar position="static">
+				<Container maxWidth="xl">
+					<Toolbar disableGutters>
+						<Box sx={{ flexGrow: 0 }}>
+							<Tooltip>
 								<Typography
 									onClick={handleOpenUserMenu}
 									variant="subtitle1"
-									sx={{ ml: 1,  color: "white", cursor : 'pointer'}}>
+									sx={{ ml: 1, color: "white", cursor: "pointer" }}>
 									{`${loggedUser.nom} ${loggedUser.prenom}`}
 								</Typography>
-						</Tooltip>
+							</Tooltip>
 
-						<Menu
-							sx={{ mt: "45px", justifyContent: "right" }}
-							id="menu-appbar"
-							anchorEl={anchorElUser}
-							anchorOrigin={{
-								vertical: "top",
-								horizontal: "left",
-							}}
-							keepMounted
-							transformOrigin={{
-								vertical: "top",
-								horizontal: "left",
-							}}
-							open={Boolean(anchorElUser)}
-							onClose={handleCloseUserMenu}>
-							<MenuItem onClick={handleCloseUserMenu}>
-								<Typography textAlign="right" onClick={handleLogout}>
-									LogOut
-								</Typography>
-							</MenuItem>
-						</Menu>
-					</Box>
-					<Box
-						sx={{
-							flexGrow: 1,
-							display: { xs: "flex", md: "none", justifyContent: "right" },
-						}}>
-						<IconButton
-							size="large"
-							aria-label="account of current user"
-							aria-controls="menu-appbar"
-							aria-haspopup="true"
-							onClick={handleOpenNavMenu}
-							color="inherit">
-							<MenuIcon />
-						</IconButton>
-						{/* mobile menu */}
-						<Menu
-							id="menu-appbar"
-							anchorEl={anchorElNav}
-							anchorOrigin={{
-								vertical: "bottom",
-								horizontal: "right",
-							}}
-							keepMounted
-							transformOrigin={{
-								vertical: "top",
-								horizontal: "right",
-							}}
-							open={Boolean(anchorElNav)}
-							onClose={handleCloseNavMenu}
+							<Menu
+								sx={{ mt: "45px", justifyContent: "right" }}
+								id="menu-appbar"
+								anchorEl={anchorElUser}
+								anchorOrigin={{
+									vertical: "top",
+									horizontal: "left",
+								}}
+								keepMounted
+								transformOrigin={{
+									vertical: "top",
+									horizontal: "left",
+								}}
+								open={Boolean(anchorElUser)}
+								onClose={handleCloseUserMenu}>
+								<MenuItem onClick={handleCloseUserMenu}>
+									<Typography textAlign="right" onClick={handleLogout}>
+										LogOut
+									</Typography>
+								</MenuItem>
+							</Menu>
+						</Box>
+						<Box
 							sx={{
-								display: { xs: "block", md: "none" },
+								flexGrow: 1,
+								display: { xs: "flex", md: "none", justifyContent: "right" },
 							}}>
-							<div className=" flex flex-col px-4">
-								{pages.map((page, index) => (
-									<NavLink
-										key={index}
-										to={page.path}
-										className=" no-underline my-1"
-										onClick={handleCloseNavMenu}>
-										{page.title}
-									</NavLink>
-								))}
-							</div>
-						</Menu>
-					</Box>
-					<Box
-						sx={{
-							flexGrow: 1,
-							display: { xs: "none", md: "flex", justifyContent: "right" },
-							mr: 4,
-						}}>
-						{pages.map((page, index) => (
-							<NavLink
-								key={index}
-								onClick={handleCloseNavMenu}
-								to={page.path}
-								className="nav-item text-white no-underline ml-3">
-								{page.title}
-							</NavLink>
-						))}
-					</Box>
-					<Link to="/">
-						<img src={MJLogo} alt="Ministre of Justice logo" width={40} />
-					</Link>
-				</Toolbar>
-			</Container>
-		</AppBar>
+							<IconButton
+								size="large"
+								aria-label="account of current user"
+								aria-controls="menu-appbar"
+								aria-haspopup="true"
+								onClick={handleOpenNavMenu}
+								color="inherit">
+								<MenuIcon />
+							</IconButton>
+							{/* mobile menu */}
+							<Menu
+								id="menu-appbar"
+								anchorEl={anchorElNav}
+								anchorOrigin={{
+									vertical: "bottom",
+									horizontal: "right",
+								}}
+								keepMounted
+								transformOrigin={{
+									vertical: "top",
+									horizontal: "right",
+								}}
+								open={Boolean(anchorElNav)}
+								onClose={handleCloseNavMenu}
+								sx={{
+									display: { xs: "block", md: "none" },
+								}}>
+								<div className=" flex bg-red-300 ml-7 px-4">
+									{pages.map((page, index) => (
+										<NavLink
+											key={index}
+											to={page.path}
+											className=" no-underline my-1"
+											onClick={handleCloseNavMenu}>
+											{page.title}
+										</NavLink>
+									))}
+								</div>
+							</Menu>
+						</Box>
+						<Box
+							sx={{
+								flexGrow: 1,
+								display: { xs: "none", md: "flex", justifyContent: "right" },
+								mr: 4,
+							}}>
+							{pages.map((page, index) => (
+								<NavLink
+									key={index}
+									onClick={handleCloseNavMenu}
+									to={page.path}
+									className="nav-item text-white no-underline ml-10">
+									{page.title}
+								</NavLink>
+							))}
+						</Box>
+						<Link to="/">
+							<img src={MJLogo} alt="Ministre of Justice logo" width={50}  className=' mr-8'/>
+						</Link>
+					</Toolbar>
+				</Container>
+			</AppBar>
+		</nav>
 	);
 }
 export default Navbar;
