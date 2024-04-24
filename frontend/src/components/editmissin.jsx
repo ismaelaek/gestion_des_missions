@@ -128,30 +128,6 @@ const EditMission = () => {
 
 					<div>
 						<Form.Item
-							name="appealCourt"
-							wrapperCol={{ span: 24 }}
-							style={{ textAlign: "end", marginBottom: 0 }}
-							initialValue={initialParent}
-							rules={[
-								{ required: true, message: "! الرجاء اختيار محكمة الاستئناف" },
-							]}>
-							<Select
-								style={{ textAlign: "right" }}
-								onChange={(value) => setParentId(value)}>
-								{juriAppels.map((juriAppel) => {
-									return (
-										<Select.Option key={juriAppel.id} value={juriAppel.id}>
-											{juriAppel.JurLibelle_ar}
-										</Select.Option>
-									);
-								})}
-							</Select>
-						</Form.Item>
-						<label htmlFor="appealCourt">: محكمة الاستئناف</label>
-					</div>
-
-					<div>
-						<Form.Item
 							name="etat"
 							wrapperCol={{ span: 24 }}
 							style={{ textAlign: "end", marginBottom: 0 }}
@@ -176,6 +152,33 @@ const EditMission = () => {
 							</Select>
 						</Form.Item>
 						<label htmlFor="employee">: حالة المهمة</label>
+					</div>
+
+					<div>
+						<Form.Item
+							name="appealCourt"
+							wrapperCol={{ span: 24 }}
+							style={{ textAlign: "end", marginBottom: 0 }}
+							initialValue={initialParent}
+							rules={[
+								{ required: true, message: "! الرجاء اختيار محكمة الاستئناف" },
+							]}>
+							<Select
+								style={{ textAlign: "right" }}
+								onChange={(value) => {
+									setParentId(value);
+									form.resetFields(["juridection"]);
+								}}>
+								{juriAppels.map((juriAppel) => {
+									return (
+										<Select.Option key={juriAppel.id} value={juriAppel.id}>
+											{juriAppel.JurLibelle_ar}
+										</Select.Option>
+									);
+								})}
+							</Select>
+						</Form.Item>
+						<label htmlFor="appealCourt">: محكمة الاستئناف</label>
 					</div>
 
 					<div>

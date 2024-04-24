@@ -126,7 +126,10 @@ const AddMission = () => {
 							]}>
 							<Select
 								style={{ textAlign: "right" }}
-								onChange={(value) => setParentId(value)}>
+								onChange={(value) => {
+									setParentId(value);
+									form.resetFields(["juridection"]);
+								}}>
 								{juriAppels.map((juriAppel) => {
 									return (
 										<Select.Option key={juriAppel.id} value={juriAppel.id}>
