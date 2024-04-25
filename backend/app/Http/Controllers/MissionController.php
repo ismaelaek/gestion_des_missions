@@ -85,7 +85,6 @@ class MissionController extends Controller
         return response()->json(['message' => 'Mission updated successfully']);
     }
 
-
     public function destroy(Mission $mission)
     {
         try {
