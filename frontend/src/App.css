@@ -50,6 +50,11 @@ nav > span{
 main {
     min-height: calc(100vh - 110px);
 }
+
+td{
+    padding: 2px 5px;
+}
+
 /* .overflow-hidden {
     overflow: hidden;
     white-space: nowrap;
