@@ -35,7 +35,6 @@ const EditProfessionnel = () => {
 
 	const onFinish = () => {
         dispatch(updateProfessionnel(formData)); 
-        message.success("! تم تعديل الموظف بنجاح");
         form.resetFields();
 	};
 

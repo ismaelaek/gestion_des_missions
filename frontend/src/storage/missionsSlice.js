@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { message  } from "antd";
 
 const initialState = {
 	missions: [],
@@ -41,8 +42,10 @@ const addMission = createAsyncThunk(
 					},
 				}
 			);
+			message.success(" ! تمت إضافة المهمة بنجاح");
 			return response.data;
 		} catch (error) {
+			message.error(error.message);
 			throw error;
 		}
 	}
@@ -59,11 +62,11 @@ const updateMission = createAsyncThunk(
 					headers: {
 						Authorization: `Bearer ${token}`,
 						'Access-Control-Allow-Origin': '*',
-						'Access-Control-Allow-Methods': 'PUT',
-						'Access-Control-Allow-Headers': '*',
+						'Content-Type': 'application/json',
 					},
 				}
 			);
+			message.success(" ! تم تعديل المهمة  بنجاح");
 			return response.data;
 		} catch (error) {
 			throw error;
@@ -79,8 +82,10 @@ const deleteMission = createAsyncThunk(
 			await axios.delete(`http://127.0.0.1:8000/api/missions/${id}`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
+
 				},
 			});
+			message.success(" ! تم حذف المهمة  بنجاح");
 			return id;
 		} catch (error) {
 			throw error;

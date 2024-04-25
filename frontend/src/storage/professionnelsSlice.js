@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { message } from "antd";
 
 const initialState = {
 	professionnels: [],
@@ -42,6 +43,7 @@ const addProfessionnel = createAsyncThunk(
 					},
 				}
 			);
+			message.success(" ! تمت إضافة الموظف بنجاح");
 			return response.data;
 		} catch (error) {
 			throw error;
@@ -63,6 +65,7 @@ const updateProfessionnel = createAsyncThunk(
 					},
 				}
 			);
+			message.success(" ! تم تعديل بيانات الموظف بنجاح");
 			return response.data;
 		} catch (error) {
 			throw error;
@@ -80,6 +83,7 @@ const deleteProfessionnel = createAsyncThunk(
 					Authorization: `Bearer ${token}`,
 				},
 			});
+			message.success(" ! تم حذف الموظف بنجاح");
 			return id;
 		} catch (error) {
 			throw error;

@@ -29,12 +29,19 @@ const EditMission = () => {
 	const [form] = Form.useForm();
 	const [startDate, setStartDate] = useState("");
 	const [endDate, setEndDate] = useState("");
+
+	useEffect(() => {
+		dispatch(getEtats());
+		dispatch(getMissions());
+		dispatch(getJuridAppels());
+		dispatch(getProfessionnels());
+		dispatch(getJuridPremieres());
+	}, [dispatch]);
     
     const { missions} = useSelector(
         (state) => state.missions
     );
 	const mission = missions.find((mission) => mission.id == id);
-
     const [parentId, setParentId] = useState(11);
 	
 	const { juriAppels, juriPremieres, jurIsLoading } = useSelector(
@@ -67,30 +74,24 @@ const EditMission = () => {
 
 
     const [missionFormData, setMissionFormData] = useState({
-			id: id,
+			id: parseInt(id),
 			NummeroMission: mission.NummeroMission,
 			TypeMission: mission.TypeMission,
-			DateAller: mission.dateAller,
+			DateAller: mission.DateAller,
 			DateRetour: mission.DateRetour,
-			DateEdition: mission.dateEdition,
+			DateEdition: mission.DateEdition,
 			idEtatMission: mission.idEtatMission,
 			idProfessionnel: mission.idProfessionnel,
 			idJuridiction: mission.idJuridiction,
 		});
     
-	useEffect(() => {
-		dispatch(getEtats());
-        dispatch(getMissions());
-		dispatch(getJuridAppels());
-		dispatch(getProfessionnels());
-		dispatch(getJuridPremieres());
-	}, [dispatch]);
+	const initialDate = moment(mission.DateAller);
+
 
 	const onFinish = () => {
 		if (validateDate(startDate, endDate)) {
 			dispatch(updateMission(missionFormData));
-			// message.success(" ! تمت تعديل المهمة  بنجاح");
-			// navigate('/');
+			navigate('/');
 		} else {
 			message.error("! تاريخ الرجوع يجب ان يكون بعد تاريخ الدهاب");
 		}
@@ -219,7 +220,6 @@ const EditMission = () => {
 					<div>
 						<Form.Item
 							name="DateAller"
-							initialValue={moment(missionFormData.DateAller)}
 							wrapperCol={{ span: 24 }}
 							style={{ textAlign: "end", marginBottom: 0 }}
 							rules={[
@@ -239,13 +239,13 @@ const EditMission = () => {
 					<div>
 						<Form.Item
 							name="DateRetour"
-							initialValue={moment(missionFormData.DateRetour)}
 							wrapperCol={{ span: 24 }}
 							style={{ textAlign: "end", marginBottom: 0 }}
 							rules={[
 								{ required: true, message: "! الرجاء اختيار تاريخ الرجوع" },
 							]}>
 							<DatePicker
+								value={moment(mission.DateRetour)}
 								onChange={(date, dateString) => {
 									setEndDate(dateString);
 								}}

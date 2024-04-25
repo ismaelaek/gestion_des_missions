@@ -66,7 +66,7 @@ const AddMission = () => {
 		dispatch(getProfessionnels());
 		dispatch(getJuridPremieres());
 	}, [dispatch]);
-
+	
 	const onFinish = () => {
 		if (validateDate(startDate, endDate)) {
 			setMissionFormData({
@@ -75,7 +75,6 @@ const AddMission = () => {
                 DateRetour: endDate,
 			})
 			dispatch(addMission(missionFormData));
-			message.success(" ! تمت إضافة المهمة  بنجاح");
 			form.resetFields();
 		} else {
 			message.error("! تاريخ الرجوع يجب ان يكون بعد تاريخ الدهاب");
