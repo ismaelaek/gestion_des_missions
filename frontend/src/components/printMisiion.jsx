@@ -9,13 +9,12 @@ import {
     PDFViewer
 } from "@react-pdf/renderer";
 
-// import Amiri from "@/assets/Amiri-Regular.ttf";
-const Amiri = "Arial";
+import Amiri from "../assets/Amiri-Regular.ttf";
 import logoImage from "../assets/MJ-Maroc.png";
 
 Font.register({ family: "Amiri", src: Amiri });
 
-export default function PrintMissiom({ mission, prof, juri, cadre }) {
+export default function PrintMissiom() {
 
 	const styles = StyleSheet.create({
 		page: {
@@ -132,7 +131,7 @@ export default function PrintMissiom({ mission, prof, juri, cadre }) {
 						</View>
 					</View>
 					<View style={styles.number}>
-						<Text style={styles.text1}>{mission.NummeroMission}: رقم</Text>
+						<Text style={styles.text1}>test: رقم</Text>
 					</View>
 					<View style={styles.title}>
 						<Text style={styles.textTitle}> أمر بمهمة</Text>
@@ -140,13 +139,13 @@ export default function PrintMissiom({ mission, prof, juri, cadre }) {
 					</View>
 					<View style={styles.body}>
 						<Text style={styles.bodyText}>
-							{prof.nom} {prof.prenom}: يؤدن للسيد
+							test : يؤدن للسيد
 						</Text>
 						<Text style={styles.bodyText}>2333 : رقم التأجير</Text>
-						<Text style={styles.bodyText}>{cadre}: الإطار</Text>
-						<Text style={styles.bodyText}>{juri} : بالتوجه إلى</Text>
+						<Text style={styles.bodyText}>test: الإطار</Text>
+						<Text style={styles.bodyText}>{"test"} : بالتوجه إلى</Text>
 						<Text style={styles.bodyText}>
-							{mission.TypeMission}: نوع المهمة
+							test: نوع المهمة
 						</Text>
 					</View>
 					<View style={styles.table}>
@@ -156,14 +155,14 @@ export default function PrintMissiom({ mission, prof, juri, cadre }) {
 								<Text style={styles.cell}> الذهـــاب</Text>
 							</View>
 							<View style={styles.container}>
-								<Text style={styles.cell}>{mission.DateRetour}</Text>
-								<Text style={styles.cell}>{mission.DateAller}</Text>
+								<Text style={styles.cell}>test</Text>
+								<Text style={styles.cell}>{"test"}</Text>
 							</View>
 						</View>
 					</View>
 					<View style={styles.edition}>
 						<Text style={styles.text1}>حرر بالرباط في</Text>
-						<Text style={styles.text1}>{mission.DateEdition}</Text>
+						<Text style={styles.text1}>test</Text>
 					</View>
 					<View style={styles.footer}>
 						<Text style={styles.text1}>

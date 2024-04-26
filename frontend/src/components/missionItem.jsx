@@ -39,24 +39,7 @@ const MissionItem = ({ object, etats, profs, juridections }) => {
 			<td className="flex gap-1">
 				<Link to={`/print/${object.id}`}>
 					<button className="btn btn-success">
-						<PDFDownloadLink
-							document={
-								<PrintMissiom
-									mission={object}
-									juri={jurid ? jurid.JurLibelle_ar : "N/A"}
-									prof={professionnel}
-									cadre={"N/A"}
-								/>
-							}
-							fileName="document.pdf">
-							{({ blob, url, loading, error }) =>
-								loading ? "Loading document..." : "Download now!"
-							}
-						</PDFDownloadLink>
-						{/* <div className=" flex  gap-1">
-							<FaPrint className="mt-1" />
-							<span>طـبع</span>
-						</div> */}
+						print
 					</button>
 				</Link>
 				<Link to={`/editmission/${object.id}`}>
