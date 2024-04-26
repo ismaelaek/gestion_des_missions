@@ -73,7 +73,11 @@ const MissionItem = ({ object, etats, profs, juridections }) => {
 				{etat ? etat.EtatLibelle_ar : "N/A"}
 				<div className={`${statusColor} w-2 h-2 rounded`}></div>
 			</td>
-			<td>{professionnel ? professionnel.NumeroSomme : "N/A"}</td>
+			<td>
+				{professionnel
+					? `${professionnel.prenom} ${professionnel.nom}   `
+					: "N/A"}
+			</td>
 			{/* <td>{object.DateEdition}</td> */}
 			<td className="text-xs">{object.DateRetour}</td>
 			<td className="text-xs">{object.DateAller}</td>
