@@ -37,7 +37,7 @@ const MissionItem = ({ object, etats, profs, juridections }) => {
 	return (
 		<tr className=" py-2">
 			<td className="flex gap-1">
-				<Link to={`/print/${object.id}`}>
+				<Link to={`/view`}>
 					<button className="btn btn-success">
 						print
 					</button>
