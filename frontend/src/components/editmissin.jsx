@@ -25,8 +25,6 @@ const EditMission = () => {
 	const navigate = useNavigate();
     const { id } = useParams();
 	const [form] = Form.useForm();
-	const [startDate, setStartDate] = useState("");
-	const [endDate, setEndDate] = useState("");
 
 	useEffect(() => {
 		dispatch(getEtats());
@@ -83,11 +81,8 @@ const EditMission = () => {
 			idJuridiction: mission?.idJuridiction,
 		});
     
-
-
-
 	const onFinish = () => {
-		if (validateDate(startDate, endDate)) {
+		if (validateDate(missionFormData.DateAller, missionFormData.DateRetour)) {
 			dispatch(updateMission(missionFormData));
 			navigate('/');
 		} else {
@@ -219,15 +214,20 @@ const EditMission = () => {
 						<Form.Item
 							name="DateAller"
 							wrapperCol={{ span: 24 }}
+							initialValue={mission?.DateAller}
 							style={{ textAlign: "end", marginBottom: 0 }}
 							rules={[
 								{ required: true, message: "! الرجاء اختيار تاريخ الدهاب" },
 							]}>
-							<DatePicker
-								onChange={(date, dateString) => {
-									setStartDate(dateString);
-								}}
-								format={"YYYY/MM/DD"}
+							<input
+								type="date"
+								name="DateAller"
+								onChange={(e) =>
+									setMissionFormData({
+										...missionFormData,
+                                        DateAller: e.target.value,
+									})
+								}
 							/>
 						</Form.Item>
 
@@ -238,16 +238,20 @@ const EditMission = () => {
 						<Form.Item
 							name="DateRetour"
 							wrapperCol={{ span: 24 }}
+							initialValue={mission?.DateRetour}
 							style={{ textAlign: "end", marginBottom: 0 }}
 							rules={[
 								{ required: true, message: "! الرجاء اختيار تاريخ الرجوع" },
 							]}>
-							<DatePicker
-								// value={moment(mission.DateRetour)}
-								onChange={(date, dateString) => {
-									setEndDate(dateString);
-								}}
-								format={"YYYY/MM/DD"}
+							<input
+								type="date"
+								name="DateRetour"
+								onChange={(e) =>
+									setMissionFormData({
+										...missionFormData,
+                                        DateRetour: e.target.value,
+									})
+								}
 							/>
 						</Form.Item>
 
