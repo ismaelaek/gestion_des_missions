@@ -20,8 +20,6 @@ import arEG from "antd/lib/locale/ar_EG";
 import moment from "moment";
 import { getEtats } from "../storage/dataSlice";
 
-const { RangePicker } = DatePicker;
-
 const EditMission = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -51,7 +49,7 @@ const EditMission = () => {
     const lastJuri = juriPremieres.find(
 			(juri) => juri.id == mission.idJuridiction
     );
-    const initialParent = lastJuri.IdJuridictionParent;
+    const initialParent = lastJuri?.IdJuridictionParent;
 
 	const { professionnels, profIsLoading } = useSelector(
 		(state) => state.professionnels
@@ -75,17 +73,17 @@ const EditMission = () => {
 
     const [missionFormData, setMissionFormData] = useState({
 			id: parseInt(id),
-			NummeroMission: mission.NummeroMission,
-			TypeMission: mission.TypeMission,
-			DateAller: mission.DateAller,
-			DateRetour: mission.DateRetour,
-			DateEdition: mission.DateEdition,
-			idEtatMission: mission.idEtatMission,
-			idProfessionnel: mission.idProfessionnel,
-			idJuridiction: mission.idJuridiction,
+			NummeroMission: mission?.NummeroMission,
+			TypeMission: mission?.TypeMission,
+			DateAller: mission?.DateAller,
+			DateRetour: mission?.DateRetour,
+			DateEdition: mission?.DateEdition,
+			idEtatMission: mission?.idEtatMission,
+			idProfessionnel: mission?.idProfessionnel,
+			idJuridiction: mission?.idJuridiction,
 		});
     
-	const initialDate = moment(mission.DateAller);
+
 
 
 	const onFinish = () => {
@@ -132,7 +130,7 @@ const EditMission = () => {
 							name="etat"
 							wrapperCol={{ span: 24 }}
 							style={{ textAlign: "end", marginBottom: 0 }}
-							initialValue={mission.idEtatMission}
+							initialValue={mission?.idEtatMission}
 							rules={[{ required: true, message: "! الرجاء اختيار الحالة" }]}>
 							<Select
 								style={{ textAlign: "right" }}
@@ -245,7 +243,7 @@ const EditMission = () => {
 								{ required: true, message: "! الرجاء اختيار تاريخ الرجوع" },
 							]}>
 							<DatePicker
-								value={moment(mission.DateRetour)}
+								// value={moment(mission.DateRetour)}
 								onChange={(date, dateString) => {
 									setEndDate(dateString);
 								}}

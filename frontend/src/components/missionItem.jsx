@@ -3,6 +3,9 @@ import { useDispatch } from "react-redux";
 import { Popconfirm } from "antd";
 import { deleteMission } from "../storage/missionsSlice";
 import { FaEdit, FaTrashAlt, FaPrint } from "react-icons/fa";
+import PrintMissiom from "./printMisiion";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+
 
 const MissionItem = ({ object, etats, profs, juridections }) => {
 	const dispatch = useDispatch();
@@ -34,12 +37,9 @@ const MissionItem = ({ object, etats, profs, juridections }) => {
 	return (
 		<tr className=" py-2">
 			<td className="flex gap-1">
-				<Link>
+				<Link to={`/view`}>
 					<button className="btn btn-success">
-						<div className=" flex  gap-1">
-							<FaPrint className="mt-1" />
-							<span>طـبع</span>
-						</div>
+						print
 					</button>
 				</Link>
 				<Link to={`/editmission/${object.id}`}>
