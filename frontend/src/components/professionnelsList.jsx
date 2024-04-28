@@ -30,9 +30,9 @@ const ProfessionnelsList = () => {
 		if (professionnels.length > 0) {
 			const filtered = professionnels.filter(
 				(item) =>
-					item.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
-					item.prenom.toLowerCase().includes(searchTerm.toLowerCase()) ||
-					item.NumeroSomme.toLowerCase().includes(searchTerm.toLowerCase())
+					item?.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
+					item?.prenom.toLowerCase().includes(searchTerm.toLowerCase()) ||
+					item?.NumeroSomme.toLowerCase().includes(searchTerm.toLowerCase())
 			);
 			setFilteredProfessionnels(filtered);
 		}

@@ -76,6 +76,7 @@ const AddMission = () => {
 			})
 			dispatch(addMission(missionFormData));
 			form.resetFields();
+			console.log(missionFormData);
 		} else {
 			message.error("! تاريخ الرجوع يجب ان يكون بعد تاريخ الدهاب");
 		}
@@ -100,7 +101,7 @@ const AddMission = () => {
 				<Form form={form} onFinish={onFinish} className="mission-form">
 					<div>
 						<Form.Item
-							name="missionType"
+							name="TypeMission"
 							wrapperCol={{ span: 24 }}
 							style={{ textAlign: "end", marginBottom: 0 }}
 							rules={[
@@ -143,7 +144,7 @@ const AddMission = () => {
 
 					<div>
 						<Form.Item
-							name="juridection"
+							name="idJuridiction"
 							wrapperCol={{ span: 24 }}
 							style={{ textAlign: "end", marginBottom: 0 }}
 							rules={[
@@ -176,7 +177,7 @@ const AddMission = () => {
 								<Select disabled={!parentId}></Select>
 							)}
 						</Form.Item>
-						<label htmlFor="primaryCourt">: المحكمة اﻹبتدائية</label>
+						<label htmlFor="idJuridiction">: المحكمة اﻹبتدائية</label>
 					</div>
 
 					<div>
@@ -216,7 +217,7 @@ const AddMission = () => {
 					</div>
 					<div>
 						<Form.Item
-							name="employee"
+							name="idProfessionnel"
 							wrapperCol={{ span: 24 }}
 							style={{ textAlign: "end", marginBottom: 0 }}
 							rules={[{ required: true, message: "! الرجاء اختيار الموظف" }]}>
@@ -243,7 +244,7 @@ const AddMission = () => {
 								options={profOptions}
 							/>
 						</Form.Item>
-						<label htmlFor="employee">: الموظف</label>
+						<label htmlFor="idProfessionnel">: الموظف</label>
 					</div>
 
 					<div>

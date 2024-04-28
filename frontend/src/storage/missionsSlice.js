@@ -39,6 +39,8 @@ const addMission = createAsyncThunk(
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
+						"Access-Control-Allow-Origin": "*",
+						"Content-Type": "application/json",
 					},
 				}
 			);
