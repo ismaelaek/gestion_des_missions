@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import Loader from "./loader";
 import {
 	Document,
 	View,
@@ -5,9 +7,15 @@ import {
 	Page,
 	StyleSheet,
 	Font,
-    Image,
-    PDFViewer
+	Image,
+	PDFViewer,
 } from "@react-pdf/renderer";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getJuridPremieres } from "../storage/jusridictionsSlice";
+import { getMissions } from "../storage/missionsSlice";
+import { getProfessionnels } from "../storage/professionnelsSlice";
+import { getCaders } from "../storage/dataSlice";
 
 import Amiri from "../assets/Amiri-Regular.ttf";
 import logoImage from "../assets/MJ-Maroc.png";
@@ -15,6 +23,31 @@ import logoImage from "../assets/MJ-Maroc.png";
 Font.register({ family: "Amiri", src: Amiri });
 
 export default function PrintMissiom() {
+	const dispatch = useDispatch();
+
+	const { caders } = useSelector((state) => state.data);
+	const { missions, missionsIsLoading } = useSelector(
+		(state) => state.missions
+	);
+	const { professionnels } = useSelector((state) => state.professionnels);
+	const { juriPremieres } = useSelector((state) => state.jusridictions);
+
+	const { id } = useParams();
+
+	useEffect(() => {
+		dispatch(getMissions());
+		dispatch(getProfessionnels());
+		dispatch(getJuridPremieres());
+		dispatch(getCaders());
+	}, [dispatch]);
+	const mission = missions.find((mission) => mission.id == id);
+	const professionnel = professionnels.find(
+		(prof) => prof.id === mission.idProfessionnel
+	);
+	const jurid = juriPremieres.find(
+		(jurid) => jurid.id === mission.idJuridiction
+	);
+	const cader = caders.find((cader) => cader.id === professionnel.IdCadre);
 
 	const styles = StyleSheet.create({
 		page: {
@@ -109,69 +142,82 @@ export default function PrintMissiom() {
 		},
 	});
 
-
-	return (
-		<PDFViewer>
-			<Document>
-				<Page style={styles.page} size="A4">
-					<View style={styles.header}>
-						<Text style={{ width: 100 }}></Text>
-						<Image src={logoImage} style={styles.image} />
-						<View
-							style={{
-								padding: "10px 20px",
-								display: "flex",
-								justifyContent: "center",
-							}}>
-							<Text style={styles.text}> المملكة المغربية ب</Text>
-							<Text style={styles.text1}> وزارة العدل</Text>
-							<Text style={styles.direct}>
-								مديرية الدراسات و التعاون و التحديث
-							</Text>
-						</View>
-					</View>
-					<View style={styles.number}>
-						<Text style={styles.text1}>test: رقم</Text>
-					</View>
-					<View style={styles.title}>
-						<Text style={styles.textTitle}> أمر بمهمة</Text>
-						<Text style={styles.textTitle}>****</Text>
-					</View>
-					<View style={styles.body}>
-						<Text style={styles.bodyText}>
-							test : يؤدن للسيد
-						</Text>
-						<Text style={styles.bodyText}>2333 : رقم التأجير</Text>
-						<Text style={styles.bodyText}>test: الإطار</Text>
-						<Text style={styles.bodyText}>{"test"} : بالتوجه إلى</Text>
-						<Text style={styles.bodyText}>
-							test: نوع المهمة
-						</Text>
-					</View>
-					<View style={styles.table}>
-						<View>
-							<View style={styles.container}>
-								<Text style={styles.cell}> الرجـــوع</Text>
-								<Text style={styles.cell}> الذهـــاب</Text>
+	if (missionsIsLoading) {
+		return <Loader />;
+	} else {
+		return (
+			<main>
+				<PDFViewer className="w-full h-screen">
+					<Document>
+						<Page style={styles.page} size="A4">
+							<View style={styles.header}>
+								<Text style={{ width: 100 }}></Text>
+								<Image src={logoImage} style={styles.image} />
+								<View
+									style={{
+										padding: "10px 20px",
+										display: "flex",
+										justifyContent: "center",
+									}}>
+									<Text style={styles.text}> المملكة المغربية ب</Text>
+									<Text style={styles.text1}> وزارة العدل</Text>
+									<Text style={styles.direct}>
+										مديرية الدراسات و التعاون و التحديث
+									</Text>
+								</View>
 							</View>
-							<View style={styles.container}>
-								<Text style={styles.cell}>test</Text>
-								<Text style={styles.cell}>{"test"}</Text>
+							<View style={styles.number}>
+								<Text style={styles.text1}>
+									رقم : {`${mission.NummeroMission} / م د ت ت `}
+								</Text>
 							</View>
-						</View>
-					</View>
-					<View style={styles.edition}>
-						<Text style={styles.text1}>حرر بالرباط في</Text>
-						<Text style={styles.text1}>test</Text>
-					</View>
-					<View style={styles.footer}>
-						<Text style={styles.text1}>
-							مديرية الدراسات و التعاون و التحديث
-						</Text>
-						<Text style={styles.text1}> الإمضاء</Text>
-					</View>
-				</Page>
-			</Document>
-		</PDFViewer>
-	);
+							<View style={styles.title}>
+								<Text style={styles.textTitle}> أمر بمهمة</Text>
+								<Text style={styles.textTitle}>****</Text>
+							</View>
+							<View style={styles.body}>
+								<Text style={styles.bodyText}>
+									يؤدن للسيد : {professionnel.prenom} {professionnel.nom}
+								</Text>
+								<Text style={styles.bodyText}>
+									{professionnel.NumeroSomme} : رقم التأجير
+								</Text>
+								<Text style={styles.bodyText}>
+									الإطار : {cader && cader.cadreLibelle_ar}
+								</Text>
+								<Text style={styles.bodyText}>
+									بالتوجه إلى : {jurid && jurid.JurLibelle_ar}
+								</Text>
+								<Text style={styles.bodyText}>
+									نوع المهمة :{mission.TypeMission}
+								</Text>
+							</View>
+							<View style={styles.table}>
+								<View>
+									<View style={styles.container}>
+										<Text style={styles.cell}> الرجـــوع</Text>
+										<Text style={styles.cell}> الذهـــاب</Text>
+									</View>
+									<View style={styles.container}>
+										<Text style={styles.cell}>{mission.DateRetour}</Text>
+										<Text style={styles.cell}>{mission.DateAller}</Text>
+									</View>
+								</View>
+							</View>
+							<View style={styles.edition}>
+								<Text style={styles.text1}>حرر بالرباط في</Text>
+								<Text style={styles.text1}>{mission.DateEdition}</Text>
+							</View>
+							<View style={styles.footer}>
+								<Text style={styles.text1}>
+									مديرية الدراسات و التعاون و التحديث
+								</Text>
+								<Text style={styles.text1}> الإمضاء</Text>
+							</View>
+						</Page>
+					</Document>
+				</PDFViewer>
+			</main>
+		);
+	}
 }

@@ -9,7 +9,7 @@ import ProfessionnelsList from "./components/professionnelsList";
 import MissionsList from "./components/home";
 import EditProfessionnel from "./components/editprofessionnel";
 import EditMission from "./components/editmissin";
-import PDFviewer from "./components/pdfViewer";
+import PrintMissiom from "./components/printMisiion";
 import "./App.css";
 
 // resolve conflicts 
@@ -37,7 +37,7 @@ function App() {
 				<Route path="/" element={<MissionsList />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/newmission" element={<AddMission />} />
-				<Route path="/view" element={<PDFviewer />} />
+				<Route path="/print/:id" element={<PrintMissiom />} />
 				<Route path="/newproffesionnel" element={<AddProfessionnel />} />
 				<Route path="/professionnels" element={<ProfessionnelsList />} />
 				<Route path="/editproffesionnel/:id" element={<EditProfessionnel />} />
