@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const initialState = {
 	juriAppels: [],
@@ -8,14 +9,12 @@ const initialState = {
 	juriError: null,
 };
 
-const getToken = () => {
-	return localStorage.getItem("token");
-};
+
 const endPoint = "http://127.0.0.1:8000/api/data/juridictions";
 
 const getJuridAppels = createAsyncThunk("getAppels", async () => {
 	try {
-		const token = getToken();
+		const token = Cookies.get("token");
 		const response = await axios.get(endPoint + "/1/", {
 			headers: {
 				Authorization: `Bearer ${token}`,
@@ -31,7 +30,7 @@ const getJuridPremieres = createAsyncThunk(
 	"getPremieres",
 	async () => {
 		try {
-			const token = getToken();
+			const token = Cookies.get("token");
 			const response = await axios.get(
 				endPoint + "/2/",
 

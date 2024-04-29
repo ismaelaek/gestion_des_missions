@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import Cookie from "js-cookie";
+
 
 const initialState = {
 	directions: [],
@@ -9,14 +11,12 @@ const initialState = {
 	error: null,
 };
 
-const getToken = () => {
-	return localStorage.getItem("token");
-};
+
 
 const getAsyncData = (name, endpoint) => {
 	return createAsyncThunk(name, async () => {
 		try {
-			const token = getToken();
+			const token = Cookie.get("token");
 			const response = await axios.get(endpoint, {
 				headers: {
 					Authorization: `Bearer ${token}`,

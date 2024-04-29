@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { message  } from "antd";
+import { message } from "antd";
+import Cookies from "js-cookie";
 
 const initialState = {
 	missions: [],
@@ -8,13 +9,10 @@ const initialState = {
 	missionError: null,
 };
 
-const getToken = () => {
-	return localStorage.getItem("token");
-};
 
 const getMissions = createAsyncThunk("getMissions", async () => {
 	try {
-		const token = getToken();
+		const token = Cookies.get("token");
 		const response = await axios.get(
 			"http://127.0.0.1:8000/api/data/missions",
 			{
@@ -32,7 +30,7 @@ const addMission = createAsyncThunk(
 	"addMission",
 	async (missionFormData) => {
 		try {
-			const token = getToken();
+			const token = Cookies.get("token");
 			const response = await axios.post(
 				"http://127.0.0.1:8000/api/missions/store",
 				missionFormData,
@@ -56,7 +54,7 @@ const updateMission = createAsyncThunk(
 	"updateMission",
 	async (updatedMissionData) => {
 		try {
-			const token = getToken();
+			const token = Cookies.get("token");
 			const response = await axios.put(
 				`http://127.0.0.1:8000/api/missions/${updatedMissionData.id}/update`,
 				updatedMissionData,
@@ -80,7 +78,7 @@ const deleteMission = createAsyncThunk(
 	"deleteMission",
 	async (id) => {
 		try {
-			const token = getToken();
+			const token = Cookies.get("token");
 			await axios.delete(`http://127.0.0.1:8000/api/missions/${id}`, {
 				headers: {
 					Authorization: `Bearer ${token}`,

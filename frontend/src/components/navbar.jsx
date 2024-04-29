@@ -12,6 +12,8 @@ import MenuItem from "@mui/material/MenuItem";
 import MJLogo from '../assets/MJ-Maroc.png'
 import { Link, NavLink } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+
 
 const pages = [
 	{ title: "لائحة الموظفين", path: "professionnels" },
@@ -21,11 +23,11 @@ const pages = [
 ];
 
 function Navbar() {
-	const navigate = useNavigate();	
+	const navigate = useNavigate();
 	const [loggedUser, setLoggedUser] = useState({});
 
 	useEffect(() => {
-		const token = localStorage.getItem("token");
+		const token = Cookies.get("token");
 		if (!token) {
 			navigate("/login");
 		}
@@ -55,7 +57,7 @@ function Navbar() {
 		setAnchorElUser(null);
 	};
 	const handleLogout = () => {
-		localStorage.removeItem("token");
+		Cookies.remove("token");
 		localStorage.removeItem("user");
 		window.location.reload();
 	}
@@ -95,7 +97,7 @@ function Navbar() {
 								onClose={handleCloseUserMenu}>
 								<MenuItem onClick={handleCloseUserMenu}>
 									<Typography textAlign="right" onClick={handleLogout}>
-										LogOut
+										تسجيل الخروج
 									</Typography>
 								</MenuItem>
 							</Menu>

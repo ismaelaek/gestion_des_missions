@@ -1,10 +1,10 @@
 import { useState , useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 import { message } from 'antd';
 import MJMarocLogo from "../assets/MJ-Maroc.png";
 import '../styles/login.css';
+import Cookies from 'js-cookie';
 
 
 const Login = () => {
@@ -19,8 +19,6 @@ const Login = () => {
 		email: "",
 		password: "",
 	});
-	const [validationErrors, setValidationErrors] = useState({});
-
 	const handleChange = (e) => {
 		setFormData({
 			...formData,
@@ -37,7 +35,7 @@ const Login = () => {
 				formData
 			);
 
-			localStorage.setItem("token", response.data.token);
+			Cookies.set("token", response.data.token, { expires: 7, secure: true });
 			localStorage.setItem("user", JSON.stringify(response.data.user));
 
 			message.success("Login Successful");
@@ -45,23 +43,10 @@ const Login = () => {
 			navigate("/");
 
 		} catch (error) {
-			if (error.response && error.response.status === 401) {
-				message.error(
-					"Invalid email or password. Please try again."
-				);
-			} else {
-				const responseData = error.response.data;
-				setValidationErrors(responseData);
-				if (responseData) {
-					setValidationErrors(responseData);
-				} else {
-					Swal.fire({
-						icon: "error",
-						title: "Error",
-						text: responseData || "Registration failed.",
-					});
-				}
-			}
+			message.error(
+				"Invalid email or password. Please try again."
+			);
+			message.error(error.message);
 		}
 	};
 
@@ -81,9 +66,6 @@ const Login = () => {
 								className="form-control"
 								onChange={handleChange}
 							/>
-							{validationErrors.email && (
-								<span className="text-danger">{validationErrors.email[0]}</span>
-							)}
 						</div>
 						<div className="form-outline mb-4">
 							<input
@@ -93,11 +75,6 @@ const Login = () => {
 								className="form-control"
 								onChange={handleChange}
 							/>
-							{validationErrors.password && (
-								<span className="text-danger">
-									{validationErrors.password[0]}
-								</span>
-							)}
 						</div>
 						<button type="submit" className="btn btn-primary mt-4 w-full">
 							دخول

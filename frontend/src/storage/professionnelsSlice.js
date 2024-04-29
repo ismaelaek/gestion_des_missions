@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { message } from "antd";
+import Cookies from "js-cookie";
 
 const initialState = {
 	professionnels: [],
@@ -8,13 +9,10 @@ const initialState = {
 	profError: null,
 };
 
-const getToken = () => {
-	return localStorage.getItem("token");
-};
 
 const getProfessionnels = createAsyncThunk("getProfs", async () => {
 	try {
-		const token = getToken();
+		const token = Cookies.get("token");
 		const response = await axios.get(
 			"http://127.0.0.1:8000/api/data/professionnels",
 			{
@@ -33,7 +31,7 @@ const addProfessionnel = createAsyncThunk(
 	"addProfessionnel",
 	async (formData) => {
 		try {
-			const token = getToken();
+			const token = Cookies.get("token");
 			const response = await axios.post(
 				"http://127.0.0.1:8000/api/professionnels/store",
 				formData,
@@ -55,7 +53,7 @@ const updateProfessionnel = createAsyncThunk(
 	"updateProfessionnel",
 	async (formData) => {
 		try {
-			const token = getToken();
+			const token = Cookies.get("token");
 			const response = await axios.put(
 				`http://127.0.0.1:8000/api/professionnels/${formData.id}/update`,
 				formData,
@@ -77,7 +75,7 @@ const deleteProfessionnel = createAsyncThunk(
 	"deleteProfessionnel",
 	async (id) => {
 		try {
-			const token = getToken();
+			const token = Cookies.get("token");
 			await axios.delete(`http://127.0.0.1:8000/api/professionnels/${id}`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
