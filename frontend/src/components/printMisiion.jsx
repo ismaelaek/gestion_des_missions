@@ -52,7 +52,7 @@ export default function PrintMissiom() {
 	const styles = StyleSheet.create({
 		page: {
 			flexDirection: "column",
-			backgroundColor: "#E4E4E4",
+			backgroundColor: "#fff",
 			paddingRight: "10px",
 		},
 		section: {
