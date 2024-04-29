@@ -10,7 +10,7 @@ import {
 	Image,
 	PDFViewer,
 } from "@react-pdf/renderer";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getJuridPremieres } from "../storage/jusridictionsSlice";
 import { getMissions } from "../storage/missionsSlice";
@@ -24,6 +24,7 @@ Font.register({ family: "Amiri", src: Amiri });
 
 export default function PrintMissiom() {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const { caders } = useSelector((state) => state.data);
 	const { missions, missionsIsLoading } = useSelector(
@@ -39,6 +40,9 @@ export default function PrintMissiom() {
 		dispatch(getProfessionnels());
 		dispatch(getJuridPremieres());
 		dispatch(getCaders());
+		if (!mission) {
+			navigate("/");
+		}
 	}, [dispatch]);
 	const mission = missions.find((mission) => mission.id == id);
 	const professionnel = professionnels.find(
@@ -168,7 +172,7 @@ export default function PrintMissiom() {
 							</View>
 							<View style={styles.number}>
 								<Text style={styles.text1}>
-									رقم : {`${mission.NummeroMission} / م د ت ت `}
+									رقم : {`${mission?.NummeroMission} / م د ت ت `}
 								</Text>
 							</View>
 							<View style={styles.title}>
@@ -177,10 +181,10 @@ export default function PrintMissiom() {
 							</View>
 							<View style={styles.body}>
 								<Text style={styles.bodyText}>
-									يؤدن للسيد : {professionnel.prenom} {professionnel.nom}
+									يؤدن للسيد : {professionnel?.prenom} {professionnel?.nom}
 								</Text>
 								<Text style={styles.bodyText}>
-									{professionnel.NumeroSomme} : رقم التأجير
+									{professionnel?.NumeroSomme} : رقم التأجير
 								</Text>
 								<Text style={styles.bodyText}>
 									الإطار : {cader && cader.cadreLibelle_ar}
@@ -189,7 +193,7 @@ export default function PrintMissiom() {
 									بالتوجه إلى : {jurid && jurid.JurLibelle_ar}
 								</Text>
 								<Text style={styles.bodyText}>
-									نوع المهمة :{mission.TypeMission}
+									نوع المهمة :{mission?.TypeMission}
 								</Text>
 							</View>
 							<View style={styles.table}>
@@ -199,14 +203,14 @@ export default function PrintMissiom() {
 										<Text style={styles.cell}> الذهـــاب</Text>
 									</View>
 									<View style={styles.container}>
-										<Text style={styles.cell}>{mission.DateRetour}</Text>
-										<Text style={styles.cell}>{mission.DateAller}</Text>
+										<Text style={styles.cell}>{mission?.DateRetour}</Text>
+										<Text style={styles.cell}>{mission?.DateAller}</Text>
 									</View>
 								</View>
 							</View>
 							<View style={styles.edition}>
 								<Text style={styles.text1}>حرر بالرباط في</Text>
-								<Text style={styles.text1}>{mission.DateEdition}</Text>
+								<Text style={styles.text1}>{mission?.DateEdition}</Text>
 							</View>
 							<View style={styles.footer}>
 								<Text style={styles.text1}>
