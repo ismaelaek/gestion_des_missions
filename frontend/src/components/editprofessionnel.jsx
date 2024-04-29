@@ -4,11 +4,12 @@ import { Button, Input, Select, Form, message, ConfigProvider } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { getDirections, getCaders } from "../storage/dataSlice";
 import { getProfessionnels, updateProfessionnel } from "../storage/professionnelsSlice";
-import { useParams } from "react-router-dom";
+import { useParams , useNavigate} from "react-router-dom";
 import arEG from "antd/lib/locale/ar_EG";
 
 const EditProfessionnel = () => {
-    const dispatch = useDispatch();
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
     const { id } = useParams();
     const { professionnels } = useSelector(state => state.professionnels)
     const professionnel = professionnels.find((item) => item.id == id);
@@ -19,23 +20,27 @@ const EditProfessionnel = () => {
 	const [form] = Form.useForm();
     const [formData, setFormData] = useState({
         id: id,
-		nom: professionnel.nom,
-		prenom: professionnel.prenom,
-		Email: professionnel.Email,
-		NumeroSomme: professionnel.NumeroSomme,
-		IdDirection: professionnel.IdDirection,
-		IdCadre: professionnel.IdCadre,
+		nom: professionnel?.nom,
+		prenom: professionnel?.prenom,
+		Email: professionnel?.Email,
+		NumeroSomme: professionnel?.NumeroSomme,
+		IdDirection: professionnel?.IdDirection,
+		IdCadre: professionnel?.IdCadre,
 	});
 
     useEffect(() => {
         dispatch(getProfessionnels());
 		dispatch(getDirections());
 		dispatch(getCaders());
+		if (!professionnel) {
+			navigate("/professionnels");
+		}
 	}, []);
 
 	const onFinish = () => {
         dispatch(updateProfessionnel(formData)); 
-        form.resetFields();
+		form.resetFields();
+		navigate("/professionnels");
 	};
 
 	const handleChange = (e) => {
@@ -75,7 +80,7 @@ const EditProfessionnel = () => {
 							className=" text-right w-full"
 							style={{ textAlign: "end", marginBottom: 0 }}
 							rules={[{ required: true, message: "! الرجاء إدخال الاسم" }]}
-							initialValue={formData.prenom} 
+							initialValue={formData?.prenom} 
 						>
 							<Input
 								style={{ textAlign: "right" }}
@@ -92,7 +97,7 @@ const EditProfessionnel = () => {
 							wrapperCol={{ span: 24 }}
 							style={{ textAlign: "end", marginBottom: 0 }}
 							rules={[{ required: true, message: "! الرجاء إدخال النسب" }]}
-							initialValue={formData.nom} 
+							initialValue={formData?.nom} 
 						>
 							<Input
 								style={{ textAlign: "right" }}
@@ -111,7 +116,7 @@ const EditProfessionnel = () => {
 							rules={[
 								{ required: true, message: "! الرجاء إدخال رقم التأجير" },
 							]}
-							initialValue={formData.NumeroSomme} 
+							initialValue={formData?.NumeroSomme} 
 						>
 							<Input
 								style={{ textAlign: "right" }}
@@ -134,7 +139,7 @@ const EditProfessionnel = () => {
 									type: "email",
 								},
 							]}
-							initialValue={formData.Email} 
+							initialValue={formData?.Email} 
 						>
 							<Input
 								style={{ textAlign: "right" }}
@@ -151,7 +156,7 @@ const EditProfessionnel = () => {
 							wrapperCol={{ span: 24 }}
 							style={{ textAlign: "right", marginBottom: 0 }}
 							rules={[{ required: true, message: "! الرجاء اختيار المديرية" }]}
-							initialValue={formData.IdDirection} 
+							initialValue={formData?.IdDirection} 
 						>
 							<Select
 								loading={dataIsLoading}
@@ -174,7 +179,7 @@ const EditProfessionnel = () => {
 							wrapperCol={{ span: 24 }}
 							style={{ textAlign: "right", marginBottom: 0 }}
 							rules={[{ required: true, message: "! الرجاء اختيار الإطار" }]}
-							initialValue={formData.IdCadre} 
+							initialValue={formData?.IdCadre} 
 						>
 							<Select
 								loading={dataIsLoading}

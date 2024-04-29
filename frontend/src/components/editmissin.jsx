@@ -32,6 +32,9 @@ const EditMission = () => {
 		dispatch(getJuridAppels());
 		dispatch(getProfessionnels());
 		dispatch(getJuridPremieres());
+		if (!mission) {
+			navigate('/')
+		}
 	}, [dispatch]);
     
     const { missions} = useSelector(
