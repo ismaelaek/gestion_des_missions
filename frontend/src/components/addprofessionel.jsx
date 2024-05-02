@@ -35,7 +35,8 @@ const AddProfessionnel = () => {
 		if (profError) {
 			message.error(profError)
 		} else {
-            form.resetFields();
+			// form.resetFields();
+			console.log('Form reset');
 		}
 	};
 	const handleChange = (e) => {

@@ -10,7 +10,7 @@ import Cookies from 'js-cookie';
 const Login = () => {
 	const navigate = useNavigate();
 	useEffect(() => {
-		const token = localStorage.getItem("token");
+		const token = Cookies.get("token");
 		if (token) {
 			navigate("/");
 		}
