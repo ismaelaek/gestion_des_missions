@@ -55,22 +55,8 @@ td{
     padding: 2px 5px;
 }
 
-/* .overflow-hidden {
-    overflow: hidden;
-    white-space: nowrap;
+.dateinput input {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 2px 4px;
 }
-
-.content {
-    display: inline-block;
-    animation: slideRight 15s linear infinite;
-}
-
-@keyframes slideRight {
-    0% {
-        transform: translateX(-100%);
-    }
-
-    100% {
-        transform: translateX(100%);
-    }
-} */

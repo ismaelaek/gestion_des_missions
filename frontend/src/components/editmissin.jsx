@@ -213,7 +213,7 @@ const EditMission = () => {
 						<label htmlFor="primaryCourt">: المحكمة اﻹبتدائية</label>
 					</div>
 
-					<div>
+					<div className="dateinput">
 						<Form.Item
 							name="DateAller"
 							wrapperCol={{ span: 24 }}
@@ -228,7 +228,7 @@ const EditMission = () => {
 								onChange={(e) =>
 									setMissionFormData({
 										...missionFormData,
-                                        DateAller: e.target.value,
+										DateAller: e.target.value,
 									})
 								}
 							/>
@@ -237,7 +237,7 @@ const EditMission = () => {
 						<label htmlFor="DateAller">: تاريخ الدهاب</label>
 					</div>
 
-					<div>
+					<div className="dateinput">
 						<Form.Item
 							name="DateRetour"
 							wrapperCol={{ span: 24 }}
@@ -252,7 +252,7 @@ const EditMission = () => {
 								onChange={(e) =>
 									setMissionFormData({
 										...missionFormData,
-                                        DateRetour: e.target.value,
+										DateRetour: e.target.value,
 									})
 								}
 							/>
