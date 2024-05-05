@@ -31,8 +31,8 @@ const MissionsList = () => {
 				<h1>لا يوجد مهمـــات</h1>
 				<SlDrawer className=" text-9xl" />
 				<span className=" my-3">
-					إضغط على <Link to={"/newproffesionnel"}>إضافة مهمة</Link>
-					لإضافة مهمة جديد
+					إضغط على <Link to={"/newproffesionnel"}> إضافة مهمة </Link>
+					لإضافة مهمة جديدة
 				</span>
 			</div>
 		);

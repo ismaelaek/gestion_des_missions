@@ -3,8 +3,8 @@
 ## Introduction
 Hello everybody !
 
-This project is a web application that allows you to manage emploayees missions.
-theis project is suggested and supervised by **Mr. Oussama Benhommane** as an internship project.
+This project is a web application that allows you to manage mission orders of DMSI.
+this project is suggested and supervised by **Mr. Oussama Benhommane** as an internship project.
 
 
 ## Technologies
@@ -75,7 +75,24 @@ Navigate to the folder named **backend**
 ```
 cd backend
 ```
-Start the server using 
+#### (Runing for the first time)
+
+Create a db named DMSI in your phpMyadmin and make sure to set your MySQL port in the env file.
+
+#####  Migrate tables  and Seed static data 
+run this command to migrate database tabels :
+
+```
+php artisan migrate 
+```
+
+make sure if all the tables are created successfully
+
+```
+php artisan seed 
+```
+
+Then finaly start the server using 
 ```
 php artisan serve
 ```
